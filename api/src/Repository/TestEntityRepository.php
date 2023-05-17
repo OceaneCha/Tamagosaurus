@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Tamagosaurus;
+use App\Entity\TestEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Tamagosaurus>
+ * @extends ServiceEntityRepository<TestEntity>
  *
- * @method Tamagosaurus|null find($id, $lockMode = null, $lockVersion = null)
- * @method Tamagosaurus|null findOneBy(array $criteria, array $orderBy = null)
- * @method Tamagosaurus[]    findAll()
- * @method Tamagosaurus[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method TestEntity|null find($id, $lockMode = null, $lockVersion = null)
+ * @method TestEntity|null findOneBy(array $criteria, array $orderBy = null)
+ * @method TestEntity[]    findAll()
+ * @method TestEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TamagosaurusRepository extends ServiceEntityRepository
+class TestEntityRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Tamagosaurus::class);
+        parent::__construct($registry, TestEntity::class);
     }
 
-    public function save(Tamagosaurus $entity, bool $flush = false): void
+    public function save(TestEntity $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class TamagosaurusRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Tamagosaurus $entity, bool $flush = false): void
+    public function remove(TestEntity $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class TamagosaurusRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Tamagosaurus[] Returns an array of Tamagosaurus objects
+//     * @return TestEntity[] Returns an array of TestEntity objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class TamagosaurusRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Tamagosaurus
+//    public function findOneBySomeField($value): ?TestEntity
 //    {
 //        return $this->createQueryBuilder('t')
 //            ->andWhere('t.exampleField = :val')
