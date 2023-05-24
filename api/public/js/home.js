@@ -1,15 +1,12 @@
 function openRegister() {
-    let div = document.createElement('div');
+    let form = document.getElementById('testForm');
     
-    div.classList.toggle('show');
-
-    document.getElementsByTagName('body')[0].appendChild(div);
+    form.classList.replace('formHidden','formVisible');
 }
 
 function openLogin() {
-    let div = document.createElement('div');
 
-    div.classList.toggle('show');
+    div.classList.toggle('formVisible');
 
     document.getElementsByTagName('body')[0].appendChild(div);
 }

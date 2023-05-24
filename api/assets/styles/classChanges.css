@@ -1,0 +1,12 @@
+.formHidden {
+    display:none;
+}
+
+.formVisible {
+    border: 0.5em solid black;
+    width: 50%;
+    height: 50%;
+    display:flex;
+    align-items: center;
+    justify-content:center;
+}
