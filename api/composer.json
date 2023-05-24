@@ -28,8 +28,8 @@
         "symfony/security-csrf": "6.2.*",
         "symfony/serializer": "6.2.*",
         "symfony/twig-bundle": "6.2.*",
-        "symfony/ux-turbo": "^2.8",
         "symfony/validator": "6.2.*",
+        "symfony/webpack-encore-bundle": "^1.16",
         "symfony/yaml": "6.2.*"
     },
     "require-dev": {
@@ -88,7 +88,13 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "prepare-db": [
+            "php bin/console d:d:d --if-exists --force",
+            "php bin/console d:d:c",
+            "php bin/console d:m:m -n",
+            "php bin/console d:f:l --append"
+          ]
     },
     "conflict": {
         "symfony/symfony": "*"
