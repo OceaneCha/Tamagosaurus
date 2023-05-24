@@ -31,10 +31,9 @@ services:
       NEXT_PUBLIC_ENTRYPOINT: http://caddy
 
   caddy:
-    image: wheathare/tamagosaurus-caddy:latest
-    #build:
-    #  context: api/
-    #  target: app_caddy
+    build:
+      context: api/
+      target: app_caddy
     depends_on:
       - php
       - pwa
