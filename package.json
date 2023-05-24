@@ -1,5 +1,8 @@
 {
-  "dependencies": {
-    "yarn": "^1.22.19"
+  "devDependencies": {
+    "@symfony/webpack-encore": "^4.3.0"
+  },
+  "scripts": {
+    "watch": "votre-commande-watch-ici"
   }
 }

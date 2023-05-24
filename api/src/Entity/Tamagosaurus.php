@@ -16,11 +16,19 @@ class Tamagosaurus
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $hunger = 10;
+    private ?int $hunger = 5;
 
-    public function __construct(int $hunger)
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
+    #[ORM\ManyToOne(inversedBy: 'tamagosauruses')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Species $type = null;
+
+
+
+    public function __construct()
     {
-        $this->hunger = $hunger;    
     }
 
     public function getId(): ?int
@@ -36,6 +44,30 @@ class Tamagosaurus
     public function setHunger(int $hunger): self
     {
         $this->hunger = $hunger;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getType(): ?Species
+    {
+        return $this->type;
+    }
+
+    public function setType(?Species $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
