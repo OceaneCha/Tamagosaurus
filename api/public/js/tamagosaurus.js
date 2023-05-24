@@ -17,17 +17,10 @@ async function updateHunger(newHunger = 0, force = false) {
     document.getElementById('dino-hunger').innerHTML = newHunger;
 }
 
-async function feed(quantity) {
+async function feed(quantity, reset = false) {
     let hunger = quantity + saurus.hunger;
-    let json = {hunger};
+    let json = reset ? {hunger: 0} : {hunger};
 
     saurus = await putRequest(saurus['@id'], json);
     updateHunger(saurus.hunger);
-}
-
-async function resetFood() {
-    let json = {hunger: 0};
-
-    saurus = await putRequest(saurus['@id'], json);
-    updateHunger();
 }
