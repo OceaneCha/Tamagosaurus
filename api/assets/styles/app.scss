@@ -1,18 +1,34 @@
-@import "custom";
 @import '~bootstrap';
-
+@import "custom";
 
 body {
-    
-    background-image: url('../images/background-blue.png') no-repeat center center fixed;
-    background-size: cover;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    background-image: url('../images/background-blue-one.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    /*autres priority de l'image de fond*/
+    }
+
+h1 {
+    color: $primary;
 }
 
 h2 {
-    color: #010101;
+    color: $primary;
 }
 
+.button-eat{
+    background-color: aliceblue;
+    width: 45px;
+    border-radius:30px ;
+    -webkit-border-radius:30px ;
+    -moz-border-radius:30px ;
+    -ms-border-radius:30px ;
+    -o-border-radius:30px ;
+}
 
   
 
