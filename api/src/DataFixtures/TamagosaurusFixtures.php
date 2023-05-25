@@ -18,7 +18,8 @@ class TamagosaurusFixtures extends Fixture
     {
         foreach (self::TYPES as $type) {
             $saurus = new Tamagosaurus();
-            $saurus->setType($type);
+            //$saurus->setType($type);
+            $saurus->setName('Océane');
             $manager->persist($saurus);
             $this->addReference('Tamagosaurus_' . $type, $saurus);
         }
