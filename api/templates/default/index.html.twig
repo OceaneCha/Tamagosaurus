@@ -4,6 +4,22 @@
 
 {# /*block de stylesheets */ #}
 
+{# /*block de stylesheets */ #}
+{% block stylesheets %}
+        {{ parent () }}
+        <style>
+            body { 
+                background-image: url({{ asset("build/images/background-blue-one.png") }});
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center center;
+                width : 428px;
+                max-height: 926px;
+                /*autres priority de l'image de fond*/
+                }
+        </style>
+{% endblock %}
+
 {% block body %}
 {# <img style="width: 50%;" src="/images/background-home.jpg" alt="Le mopnde virtuel des Tamagosaurus!"><br> #}
 {# <style>
