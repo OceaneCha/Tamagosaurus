@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Donne prénom à ma Tamagosaurus
+{% endblock %}
+
+{% block body %}
+	<h1>Donne-moi un prénom</h1>
+
+	{{ include('tamagosaurus/_form.html.twig') }}
+
+	<a href="{{ path('app_tamagosaurus_index') }}">back to list</a>
+{% endblock %}

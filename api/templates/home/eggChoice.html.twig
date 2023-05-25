@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tamagosaurus - Choix de l'oeuf{% endblock %}
+
+{% block body %}
+
+<main>
+    <div class="title">
+        <h1>Tamagosaurus</h1>
+        <h2>Quel oeuf choisirez-vous ?</h2>
+    </div>
+
+    <div class="about">
+        <h3>Un oeuf, un tamagosaure !</h3>
+        <p>
+            Parmi l'un de ces oeufs se trouve votre bébé Tamagosaure.
+            Cliquez sur l'un d'entre eux pour choisir votre premier Tamagosaure !
+        </p>
+    </div>
+
+    <div class="eggs">
+        {% for i in 0..2 %}
+            <img src ="{{ asset('/build/dinoegg.png/') }}">
+        {% endfor %}
+    </div>
+
+    
+</main>
+
+{% endblock %}
