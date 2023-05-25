@@ -2,19 +2,41 @@
 
 {% block title %}Hello DefaultController!{% endblock %}
 
+{# /*block de stylesheets */ #}
+{% block stylesheets %}
+        {{ parent () }}
+        <style>
+            body { 
+                background-image: url({{ asset("build/images/background-blue-one.png") }});
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center center;
+                width : 428px;
+                max-height: 926px;
+                /*autres priority de l'image de fond*/
+                }
+        </style>
+{% endblock %}
+
 {% block body %}
-<style>
+{# <img style="width: 50%;" src="/images/background-home.jpg" alt="Le mopnde virtuel des Tamagosaurus!"><br> #}
+{# <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+</style> #}
 
-<div class="example-wrapper">
-    <h1>Mon premier tamagosaurus</h1>
+<div class="container">
+    <h1 class="display-2">Mon premier Tamagosaurus</h1>
 
-    <img style="width: 15%;" src="/images/dino.jpg" alt="Un mignon tamagosaurus !"><br>
+    <img class="rounded mx-auto d-block" style="width: 100%;" src="{{ asset('build/images/diplosaure-aquaticus.png') }}" alt="Un mignon Tamagosaurus !"><br>
+    
     <p>Faim : <span id="dino-hunger"></span></p>
-    <button type="submit" onClick="feed(1)">Donner 1 de nourriture</button>
-    <button type="submit" onClick="resetFood()">Réinitialiser la nourriture</button>
+    <h2>Donnez lui à manger<h2>
+    <p class="lead">Nourrissez le chaque jour, vous disposez diverses aliments.</p>
+
+    <button type="submit" class="btn btn-primary" onClick="feed(1)"> Donner 1 de nourriture </button>
+    <button type="submit" class="btn btn-outline-danger" onClick="resetFood()">Réinitialiser la nourriture</button>
+    
 </div>
 <script src="/js/api/request.js"></script>
 <script src="/js/tamagosaurus.js"></script>
