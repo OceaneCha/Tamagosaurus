@@ -6954,52 +6954,6 @@
                 "shasum": ""
             },
             "require": {
-            },
-            "require-dev": {
-            },
-            "suggest": {
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                },
-                {
-                },
-                {
-                },
-                {
-                },
-                {
-                }
-            ],
-            "keywords": [
-            ],
-            "support": {
-            },
-        },
-        {
-            "name": "doctrine/data-fixtures",
-            "version": "1.6.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/data-fixtures.git",
-                "reference": "4af35dadbfcf4b00abb2a217c4c8c8800cf5fcf4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/data-fixtures/zipball/4af35dadbfcf4b00abb2a217c4c8c8800cf5fcf4",
-                "reference": "4af35dadbfcf4b00abb2a217c4c8c8800cf5fcf4",
-                "shasum": ""
-            },
-            "require": {
                 "doctrine/deprecations": "^0.5.3 || ^1.0",
                 "doctrine/deprecations": "^0.5.3 || ^1.0",
                 "doctrine/persistence": "^1.3.3 || ^2.0 || ^3.0",
