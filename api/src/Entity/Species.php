@@ -23,9 +23,13 @@ class Species
     #[ORM\OneToMany(mappedBy: 'species', targetEntity: Environment::class)]
     private Collection $environment;
 
+    #[ORM\OneToMany(mappedBy: 'type', targetEntity: Tamagosaurus::class)]
+    private Collection $tamagosauruses;
+
     public function __construct()
     {
         $this->environment = new ArrayCollection();
+        $this->tamagosauruses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -69,6 +73,36 @@ class Species
             // set the owning side to null (unless already changed)
             if ($environment->getSpecies() === $this) {
                 $environment->setSpecies(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tamagosaurus>
+     */
+    public function getTamagosauruses(): Collection
+    {
+        return $this->tamagosauruses;
+    }
+
+    public function addTamagosaurus(Tamagosaurus $tamagosaurus): self
+    {
+        if (!$this->tamagosauruses->contains($tamagosaurus)) {
+            $this->tamagosauruses->add($tamagosaurus);
+            $tamagosaurus->setType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTamagosaurus(Tamagosaurus $tamagosaurus): self
+    {
+        if ($this->tamagosauruses->removeElement($tamagosaurus)) {
+            // set the owning side to null (unless already changed)
+            if ($tamagosaurus->getType() === $this) {
+                $tamagosaurus->setType(null);
             }
         }
 
