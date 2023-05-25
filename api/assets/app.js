@@ -10,4 +10,4 @@ import './styles/app.css';
 import './styles/classChanges.css';
 
 // start the Stimulus application
-import './bootstrap';
+import "./bootstrap";
