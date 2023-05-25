@@ -1,9 +1,9 @@
 const putRequest = async (resource, json) => {
     const response = await fetch(`https://localhost${resource}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
             Accept: "application/ld+json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/merge-patch+json"
         },
         body: JSON.stringify(json)
     });
