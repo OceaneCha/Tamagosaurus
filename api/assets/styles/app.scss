@@ -1,14 +1,26 @@
 @import '~bootstrap';
 @import "custom";
 
-body {
+
+
+body { 
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    /*autres priority de l'image de fond*/
+    }
+
+
+.container {
 
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;  
-    background-image: url('../images/background-blue-one.png');
+    background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: center;
     /*autres priority de l'image de fond*/
     }
 
@@ -20,14 +32,17 @@ h2 {
     color: $primary;
 }
 
-.button-eat{
-    background-color: aliceblue;
+// .button-eat{  
+//     width: 45px;
+//     border-radius:30px ;
+//     -webkit-border-radius:30px ;
+//     -moz-border-radius:30px ;
+//     -ms-border-radius:30px ;
+//     -o-border-radius:30px ;
+// }
+
+.diplosaure-aquaticus{
     width: 45px;
-    border-radius:30px ;
-    -webkit-border-radius:30px ;
-    -moz-border-radius:30px ;
-    -ms-border-radius:30px ;
-    -o-border-radius:30px ;
 }
 
   
