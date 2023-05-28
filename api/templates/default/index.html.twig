@@ -37,8 +37,13 @@
     <h2>Donnez lui à manger<h2>
     <p class="lead">Nourrissez le chaque jour, vous disposez diverses aliments.</p>
 
-    {% include 'layout/_buttons.html.twig' %}
-</div>
+        <p>Faim : <span id="dino-hunger"></span></p>
+        <h2>Donnez lui à manger<h2>
+        <p class="lead">Nourrissez le chaque jour, vous disposez diverses aliments.</p>
+
+        {% include 'layout/_buttons-hunger.html.twig' %}
+        {% include 'layout/_buttons-option.html.twig' %}
+    </div>
 
 <script src="/js/api/request.js"></script>
 <script src="/js/tamagosaurus.js"></script>
