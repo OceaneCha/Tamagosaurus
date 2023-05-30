@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LoginController!{% endblock %}
+
+{% block body %}
+
+    {% if app.user %}
+    <p>Welcome {{ app.user.username }}!</p>
+    <p><a href="{{path('app_logout')}}">Logout?</a></p>
+    {% else %}
+    {{ render(controller(
+    'App\\Controller\\LoginController::loginForm'
+    )) }}
+    {% endif %}
+{% endblock %}

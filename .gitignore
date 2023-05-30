@@ -1,6 +1,8 @@
 /.env
 /helm/api-platform/charts/*
 !/helm/api-platform/charts/.gitignore
-node_modules/.package-lock.json
-node_modules/.bin/yarn
-node_modules/*
+/node_modules/
+/vendor/
+composer.*
+package.json
+yarn.lock

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Tamagosaurus{% endblock %}
+
+{% block body %}
+    <h1>Edit Tamagosaurus</h1>
+
+    {{ include('tamagosaurus/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_tamagosaurus_index') }}">back to list</a>
+
+    {{ include('tamagosaurus/_delete_form.html.twig') }}
+{% endblock %}
