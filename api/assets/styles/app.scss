@@ -46,9 +46,13 @@ body {
     width: 45px;
 }
 
-  
+.element-visible {
+    display: inherit;
+}
 
-
+.element-hidden {
+    display: none;
+}
 
 
 

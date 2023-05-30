@@ -31,3 +31,22 @@ async function resetFood() {
     saurus = await putRequest(saurus['@id'], json);
     updateHunger();
 }
+
+function toggleOptions(elementId) {
+    let classes = document.getElementById(elementId).classList;
+    let hidden = 'element-hidden';
+    let visible = 'element-visible';
+
+    if (classes.contains(visible)) {
+        classes.replace(visible, hidden);
+    } else if (classes.contains(hidden)) {
+        
+        let othersVisible = document.getElementsByClassName(visible);
+        
+        for (element of othersVisible) {
+            element.classList.replace(visible, hidden);
+        }
+
+        classes.replace(hidden, visible);
+    }
+}

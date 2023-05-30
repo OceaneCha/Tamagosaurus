@@ -6,7 +6,7 @@
 
 {# /*block de stylesheets */ #}
 {% block stylesheets %}
-
+        {{ parent() }}
         <style>
             body {
                 background-image: url({{ asset("build/images/background-blue-one.png") }});
@@ -26,13 +26,24 @@
         <h1 class="display-2">Mon premier Tamagosaurus</h1>
         <div>{{ tamagosauru.name }}</div>
 
-        <img class="rounded mx-auto d-block" style="width: 40%;" src="{{ asset('build/images/diplosaure-aquaticus.png') }}" alt="Un mignon Tamagosaurus !"><br>
+        <img class="rounded mx-auto d-block" style="width: 20%;" src="{{ asset('build/images/diplosaure-aquaticus.png') }}" alt="Un mignon Tamagosaurus !"><br>
 
         <p>Faim : <span id="dino-hunger"></span></p>
         <h2>Donnez lui à manger<h2>
         <p class="lead">Nourrissez le chaque jour, vous disposez diverses aliments.</p>
 
-        {% include 'layout/_buttons-hunger.html.twig' %}
+        <div id="options-hunger" class="element-hidden"> {# Display/hide feed buttons #}
+            {% include 'layout/_buttons-hunger.html.twig' %}
+        </div>
+
+        <div id="options-clothes" class="element-hidden">
+            <button class="btn btn-primary">test</button>
+        </div>
+
+        <div id="options-locations" class="element-hidden">
+            <button class="btn btn-primary">Parc</button>
+            <button class="btn btn-primary">Plage</button>
+        </div>
         {% include 'layout/_buttons-option.html.twig' %}
     </div>
 
