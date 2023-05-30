@@ -16,7 +16,8 @@ class TamagosaurusController extends AbstractController
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(TamagosaurusRepository $tamagosaurusRepository): Response
     {
-        return $this->render('tamagosaurus/index.html.twig', [
+        // Modify render template later
+        return $this->render('default/index.html.twig', [
             'tamagosauruses' => $tamagosaurusRepository->findAll(),
         ]);
     }
@@ -29,12 +30,21 @@ class TamagosaurusController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Avant de sauvegarder le tamagosaurus, inject its type
+            // En fonction de l'oeuf sélectionné par l'utilisateur
+            //
+            // $tamagosauru->setType($type);
+            //
+            // OU
+            // Utiliser les méthodes d'API-Platform (POST) plutôt que le formulaire
             $tamagosaurusRepository->save($tamagosauru, true);
+
+            $this->addFlash('success', 'The tamagosaurus has been named!');
 
             return $this->redirectToRoute('app_tamagosaurus_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('tamagosaurus/new.html.twig', [
+        return $this->render('tamagosaurus/_form.html.twig', [
             'tamagosauru' => $tamagosauru,
             'form' => $form,
         ]);
