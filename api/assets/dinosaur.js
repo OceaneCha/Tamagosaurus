@@ -68,7 +68,7 @@ assetLoader.load(
     mixer = m;
 
     for (let i = 0; i < gltf.animations.length; ++i) {
-      if (gltf.animations[i].name.includes('run')) {
+      if (gltf.animations[i].name.includes('roar')) {
         const clip = gltf.animations[i];
         const action = mixer.clipAction(clip);
         action.play();
