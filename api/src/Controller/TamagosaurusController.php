@@ -17,8 +17,11 @@ class TamagosaurusController extends AbstractController
     public function index(TamagosaurusRepository $tamagosaurusRepository): Response
     {
         // Modify render template later
+        $saurus = new Tamagosaurus();
+        $saurus->setName('John');
         return $this->render('default/index.html.twig', [
             'tamagosauruses' => $tamagosaurusRepository->findAll(),
+            'tamagosauru' => $saurus,
         ]);
     }
 
@@ -44,7 +47,7 @@ class TamagosaurusController extends AbstractController
             return $this->redirectToRoute('app_tamagosaurus_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('tamagosaurus/_form.html.twig', [
+        return $this->render('tamagosaurus/new.html.twig', [
             'tamagosauru' => $tamagosauru,
             'form' => $form,
         ]);
