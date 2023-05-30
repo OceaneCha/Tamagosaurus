@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Tamagosaure{% endblock %}
+
+{# /*block de stylesheets */ #}
+
+{# /*block de stylesheets */ #}
+{% block stylesheets %}
+        {{ parent() }}
+        <style>
+            body {
+                background-image: url({{ asset("build/images/background-blue-one.png") }});
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center center;
+
+                /*autres priority de l'image de fond*/
+                }
+        </style>
+{% endblock %}
+
+{% block body %}
+
+<p>Bienvenue à {{destination}} !</p>
+
+<p><a role="button" class="btn btn-primary" href="{{ path('app_default') }}">Retour au bercail</a></p>
+
+{% endblock %}

@@ -46,7 +46,7 @@
         </div>
 
         <div id="options-locations" class="element-hidden">
-            <button class="btn btn-primary">Parc</button>
+            <a role="button" href="{{ path('app_stroll_go', { location: 0 }) }}" class="btn btn-primary">Parc</a>
             <button class="btn btn-primary">Plage</button>
         </div>
         {% include 'layout/_buttons-option.html.twig' %}
