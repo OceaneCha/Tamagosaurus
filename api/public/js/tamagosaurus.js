@@ -5,7 +5,7 @@ window.onload = function () {
 }
 
 async function fetchSaurus() {
-    return await getRequest('/tamagosauruses/1');
+    return await getRequest('/tamagosauruses/11');
 }
 
 async function updateHunger(newHunger = 0, force = false) {
