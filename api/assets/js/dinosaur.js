@@ -1,51 +1,61 @@
 import * as THREE from "./three/three";
-import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 // import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 // import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { GLTFLoader } from "three/examples/jsm/loaders//GLTFLoader";
 
 // TO-DO si l'élément existe exécuter
-// Models
-
-const dinoUrl = new URL("../source/trex1.glb", import.meta.url);
-
-// Initialization
-
-const renderer = new THREE.WebGLRenderer();
-
-renderer.shadowMap.enabled = true;
-
-renderer.setSize(window.innerWidth, window.innerHeight);
-
 const dinoRender = document.querySelector("#dino-render");
 
-dinoRender.appendChild(renderer.domElement);
+if (dinoRender) {
+  // Models
 
-const scene = new THREE.Scene();
+  const dinoUrl = new URL("../source/trex1.glb", import.meta.url);
+  const backgroundUrl = new URL("../images/backgrounds/park.jpg", import.meta.url);
 
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
+  // Initialization
 
-const orbit = new OrbitControls(camera, renderer.domElement);
-camera.position.set(9, 10, 10);
-orbit.update();
+  const renderer = new THREE.WebGLRenderer();
 
-// Helpers
+  renderer.shadowMap.enabled = true;
 
-const axesHelper = new THREE.AxesHelper(5);
-scene.add(axesHelper);
-// const gridHelper = new THREE.GridHelper(30);
-// scene.add(gridHelper);
+  renderer.setSize(window.innerWidth, window.innerHeight);
 
-// Objects
 
-//Plane
 
-const vertexShader = `
+  dinoRender.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
+
+  const orbit = new OrbitControls(camera, renderer.domElement);
+  camera.position.set(9, 10, 10);
+  orbit.update();
+
+  // Helpers
+
+  const axesHelper = new THREE.AxesHelper(5);
+  scene.add(axesHelper);
+  // const gridHelper = new THREE.GridHelper(30);
+  // scene.add(gridHelper);
+
+  //Load background texture
+  const loader = new THREE.TextureLoader();
+  loader.load(backgroundUrl, function (texture) {
+    scene.background = texture;
+  });
+
+  // Objects
+
+  //Plane
+
+  const vertexShader = `
   varying vec2 vUv;
   uniform float time;
   
@@ -76,7 +86,7 @@ const vertexShader = `
 	}
 `;
 
-const fragmentShader = `
+  const fragmentShader = `
   varying vec2 vUv;
   
   void main() {
@@ -86,139 +96,144 @@ const fragmentShader = `
   }
 `;
 
-const uniforms = {
-	time: {
-  	value: 0
-  }
-}
-
-const leavesMaterial = new THREE.ShaderMaterial({
-	vertexShader,
-  fragmentShader,
-  uniforms,
-  side: THREE.DoubleSide
-});
-
-/////////
-// MESH
-/////////
-
-const instanceNumber = 5000;
-const dummy = new THREE.Object3D();
-
-const geometry = new THREE.PlaneGeometry( 0.1, 1, 1, 4 );
-geometry.translate( 0, 0.5, 0 ); // move grass blade geometry lowest point at 0.
-
-const instancedMesh = new THREE.InstancedMesh( geometry, leavesMaterial, instanceNumber );
-
-scene.add( instancedMesh );
-
-// Position and scale the grass blade instances randomly.
-
-for ( let i=0 ; i<instanceNumber ; i++ ) {
-
-	dummy.position.set(
-  	( Math.random() - 0.5 ) * 10,
-    0,
-    ( Math.random() - 0.5 ) * 10
-  );
-  
-  dummy.scale.setScalar( 0.5 + Math.random() * 0.5 );
-  
-  dummy.rotation.y = Math.random() * Math.PI;
-  
-  dummy.updateMatrix();
-  instancedMesh.setMatrixAt( i, dummy.matrix );
-
-}
-
-
-//Dino
-
-const assetLoader = new GLTFLoader();
-let mixer;
-const animationClips = [];
-assetLoader.load(
-  dinoUrl.href,
-  function (gltf) {
-    const model = gltf.scene;
-    console.log(gltf.animations);
-    scene.add(model);
-    model.position.set(0, 0, 0);
-    model.scale.set(1, 1, 1);
-
-    const m = new THREE.AnimationMixer(gltf.scene);
-    mixer = m;
-
-    for (let i = 0; i < gltf.animations.length; ++i) {
-      if (['bite', 'roar', 'run', 'attack_tail', 'idle'].includes(gltf.animations[i].name)) {
-        const clip = gltf.animations[i];
-
-        animationClips.push(clip);
-        // const action = mixer.clipAction(clip);
-        // action.play();
-      }
+  const uniforms = {
+    time: {
+      value: 0
     }
-    // Play animation randomly every 1-10s.
-// setInterval(() => {
-//   action
-//     .reset()
-//     .play();
-// }, Math.random() * 9000 + 1000);
-    // const mixer = new THREE.AnimationMixer(model);
-    // const animationAction = mixer.clipAction((model).animations[0]);
-    // animationActions.push(animationAction);
-    // activeAction = animationActions[0];
-  },
-  undefined,
-  function (error) {
-    console.error(error);
   }
-);
 
-function playRandomAnimation() {
-  const randomIndex = Math.floor(Math.random() * animationClips.length);
-  const clip = animationClips[randomIndex];
-  const action = mixer.clipAction(clip);
-  action.reset().play();
-}
+  const leavesMaterial = new THREE.ShaderMaterial({
+    vertexShader,
+    fragmentShader,
+    uniforms,
+    side: THREE.DoubleSide
+  });
 
+  /////////
+  // MESH
+  /////////
 
-// const anim = new GLTFLoader();
-// anim.load(dinoUrl.href, (anim) => {
-//   this.mixer = new THREE.AnimationMixer(gltf);
-//   const idle = this.mixer.clipAction(anim.animations[0]);
-//   idle.play();
-// });
-// 
+  const instanceNumber = 5000;
+  const dummy = new THREE.Object3D();
 
-// Light
+  const geometry = new THREE.PlaneGeometry(0.1, 1, 1, 4);
+  geometry.translate(0, 0.5, 0); // move grass blade geometry lowest point at 0.
 
-const ambientLight = new THREE.AmbientLight(0x333333);
-scene.add(ambientLight);
+  const instancedMesh = new THREE.InstancedMesh(geometry, leavesMaterial, instanceNumber);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-scene.add(directionalLight);
-directionalLight.position.x = 30;
-directionalLight.position.y = 20;
-directionalLight.castShadow = true;
-directionalLight.shadow.camera.top = 12;
+  scene.add(instancedMesh);
 
-const dLightHelper = new THREE.DirectionalLightHelper(directionalLight);
-scene.add(dLightHelper);
+  // Position and scale the grass blade instances randomly.
 
-const clock = new THREE.Clock();
-function animate() {
-  if (mixer) {
-    mixer.update(clock.getDelta());
+  for (let i = 0; i < instanceNumber; i++) {
+
+    dummy.position.set(
+      (Math.random() - 0.5) * 10,
+      0,
+      (Math.random() - 0.5) * 10
+    );
+
+    dummy.scale.setScalar(0.5 + Math.random() * 0.5);
+
+    dummy.rotation.y = Math.random() * Math.PI;
+
+    dummy.updateMatrix();
+    instancedMesh.setMatrixAt(i, dummy.matrix);
+
   }
-  setInterval(playRandomAnimation, 1000000);
 
-  
-  leavesMaterial.uniforms.time.value = clock.getElapsedTime();
-  leavesMaterial.uniformsNeedUpdate = true;
-  
-  renderer.render(scene, camera);
+
+  //Dino
+
+  const assetLoader = new GLTFLoader();
+  let mixer;
+  const animationClips = [];
+  assetLoader.load(
+    dinoUrl.href,
+    function (gltf) {
+      const model = gltf.scene;
+      console.log(gltf.animations);
+      scene.add(model);
+      model.position.set(0, 0, 0);
+      model.scale.set(1, 1, 1);
+
+      const m = new THREE.AnimationMixer(gltf.scene);
+      mixer = m;
+
+      for (let i = 0; i < gltf.animations.length; i++) {
+        if (gltf.animations[i].name) {
+          const clip = gltf.animations[i];
+
+          animationClips.push(clip);
+          // const action = mixer.clipAction(clip);
+          // action.play();
+        }
+      }
+      console.log(animationClips)
+      // Play animation randomly every 1-10s.
+      // setInterval(() => {
+      //   action
+      //     .reset()
+      //     .play();
+      // }, Math.random() * 9000 + 1000);
+      // const mixer = new THREE.AnimationMixer(model);
+      // const animationAction = mixer.clipAction((model).animations[0]);
+      // animationActions.push(animationAction);
+      // activeAction = animationActions[0];
+      setInterval(playRandomAnimation, 10000);
+    },
+    undefined,
+    function (error) {
+      console.error(error);
+    }
+  );
+
+  function playRandomAnimation() {
+    const randomIndex = Math.floor(Math.random() * animationClips.length);
+    const clip = animationClips[randomIndex];
+    const action = mixer.clipAction(clip);
+    action.reset().play();
+    console.log(action);
+  }
+
+
+  // const anim = new GLTFLoader();
+  // anim.load(dinoUrl.href, (anim) => {
+  //   this.mixer = new THREE.AnimationMixer(gltf);
+  //   const idle = this.mixer.clipAction(anim.animations[0]);
+  //   idle.play();
+  // });
+  // 
+
+  // Light
+
+  const ambientLight = new THREE.AmbientLight(0x333333);
+  scene.add(ambientLight);
+
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  scene.add(directionalLight);
+  directionalLight.position.x = 30;
+  directionalLight.position.y = 20;
+  directionalLight.castShadow = true;
+  directionalLight.shadow.camera.top = 12;
+
+  const dLightHelper = new THREE.DirectionalLightHelper(directionalLight);
+  scene.add(dLightHelper);
+
+  const clock = new THREE.Clock();
+  function animate() {
+    if (mixer) {
+      mixer.update(clock.getDelta());
+    }
+    // setInterval(playRandomAnimation, 100);
+
+
+    leavesMaterial.uniforms.time.value = clock.getElapsedTime();
+    leavesMaterial.uniformsNeedUpdate = true;
+
+    renderer.render(scene, camera);
+  }
+
+  renderer.setAnimationLoop(animate);
+
 }
-
-renderer.setAnimationLoop(animate);
