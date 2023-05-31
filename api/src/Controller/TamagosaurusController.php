@@ -43,6 +43,7 @@ class TamagosaurusController extends AbstractController
             // En fonction de l'oeuf sélectionné par l'utilisateur
             //
             // $tamagosauru->setType($type);
+            $tamagosauru->setOwner($this->getUser());
             //
             // OU
             // Utiliser les méthodes d'API-Platform (POST) plutôt que le formulaire
