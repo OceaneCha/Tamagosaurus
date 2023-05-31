@@ -32,4 +32,15 @@ class DefaultController extends AbstractController
             'destinations' => $destinations,
         ]);
     }
+
+    #[Route('/dino', name: 'dino')]
+    public function dino(): Response
+    {
+        $saurus = new Tamagosaurus(5);
+        $saurus->setName("Diplosaure Aquaticus");
+        return $this->render('default/dino.html.twig', [
+            'controller_name' => 'DefaultController', 
+            'tamagosauru' => $saurus,
+        ]);
+    }
 }
