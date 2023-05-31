@@ -71,4 +71,7 @@ function toggleOptions(elementId) {
 }
 
 // URL de souscription Mercure
-// https://localhost/.well-known/mercure?topic=https://localhost/<resource>/<id>
+// const evtSource = new EventSource('https://localhost/.well-known/mercure?topic=https://localhost/<resource>/<id>')
+// evtSource.onmessage = function(event) {
+//     const data = JSON.parse(event.data);
+// }
