@@ -23,14 +23,14 @@
 
 <body class="container">
     <div>
-        <h1 class="display-2">Mon premier Tamagosaurus</h1>
-        <div>{{ tamagosauru.name }}</div>
+        <h1 class="display-2 text-success h1 text-center font-poppins">Mon premier Tamagosaurus</h1>
+        <div class="text-primary display-1 text-center font-weight-bold">{{ tamagosauru.name }}</div>
 
         <img class="rounded mx-auto d-block" style="width: 20%;" src="{{ asset('build/images/diplosaure-aquaticus.png') }}" alt="Un mignon Tamagosaurus !"><br>
 
-        <p>Faim : <span id="dino-hunger"></span></p>
-        <h2>Donnez lui à manger<h2>
-        <p class="lead">Nourrissez le chaque jour, vous disposez diverses aliments.</p>
+        <p class="text-success">Faim : <span id="dino-hunger"></span></p>
+        <h2 class="text-success h2">Donnez lui à manger<h2>
+        <p class="lead text-success">Nourrissez le chaque jour, vous disposez diverses aliments.</p>
 
         <div id="options-hunger" class="element-hidden"> {# Display/hide feed buttons #}
             {% include 'layout/_buttons-hunger.html.twig' %}
