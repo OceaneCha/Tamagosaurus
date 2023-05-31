@@ -1,21 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon tamagosaure{% endblock %}
+{% block title %}Mon Tamagosaure{% endblock %}
+
+{# /*block de stylesheets */ #}
+
+{# /*block de stylesheets */ #}
+{% block stylesheets %}
+        {{ parent() }}
+        <style>
+            body { 
+                background-image: url({{ asset("build/images/background-blue-one.png") }});
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center center;
+                width : 428px;
+                max-height: 926px;
+                /*autres priority de l'image de fond*/
+                }
+        </style>
+{% endblock %}
 
 {% block body %}
-<style>
+{# <img style="width: 50%;" src="/images/background-home.jpg" alt="Le mopnde virtuel des Tamagosaurus!"><br> #}
+{# <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+</style> #}
 
-<div class="example-wrapper">
-    <h1>Mon premier tamagosaurus</h1>
+<div class="container">
+    <h1 class="display-2">Mon premier Tamagosaurus</h1>
+    <div>{{ tamagosauru.name }}</div>
 
-    <img style="width: 15%;" src="/images/dino.jpg" alt="Un mignon tamagosaurus !"><br>
-    <p>Faim : <span id="dino-hunger"></span></p>
-    <button type="submit" onClick="feed(1)">Donner 1 de nourriture</button>
-    <button type="submit" onClick="resetFood()">Réinitialiser la nourriture</button>
-</div>
-<script src="/js/api/request.js"></script>
-<script src="/js/tamagosaurus.js"></script>
+        <img class="rounded mx-auto d-block" style="width: 20%;" src="{{ asset('build/images/diplosaure-aquaticus.png') }}" alt="Un mignon Tamagosaurus !"><br>
+
+        <p>Faim : <span id="dino-hunger"></span></p>
+        <h2>Donnez lui à manger<h2>
+        <p class="lead">Nourrissez le chaque jour, vous disposez diverses aliments.</p>
+
+        <div id="options-hunger" class="element-hidden"> {# Display/hide feed buttons #}
+            {% include 'layout/_buttons-hunger.html.twig' %}
+        </div>
+
+        <div id="options-clothes" class="element-hidden">
+            <button class="btn btn-primary">test</button>
+        </div>
+
+        <div id="options-locations" class="element-hidden">
+            <a role="button" href="{{ path('app_stroll_go', { location: 0 }) }}" class="btn btn-primary">Parc</a>
+            <button class="btn btn-primary">Plage</button>
+        </div>
+        {% include 'layout/_buttons-option.html.twig' %}
+    </div>
+
+<script src="/build/js/api/request.js"></script>
+<script src="/build/js/tamagosaurus.js"></script>
+</body>
+
 {% endblock %}

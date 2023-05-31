@@ -5,7 +5,7 @@
 {% block body %}
 
 <main>
-    <div class="title">
+    <div class="text-danger">
         <h1>Tamagosaurus</h1>
         <h2>Quel oeuf choisirez-vous ?</h2>
     </div>
@@ -20,8 +20,11 @@
 
     <div class="eggs">
         {% for i in 0..2 %}
-            <img src ="{{ asset('/build/dinoegg.png/') }}">
+            <a role="button" href="{{ path('app_birth') }}" class="btn btn-primary rounded-circle border border-secondary">
+                <img src ="{{ asset('/build/images/dinoegg.png') }}">
+            </a>
         {% endfor %}
+
     </div>
 
     

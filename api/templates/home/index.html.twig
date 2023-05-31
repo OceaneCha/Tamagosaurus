@@ -1,20 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Tamagosaurus
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<main>
+		<div class="title">
+			<h1>Tamagosaurus</h1>
+			<h2>Votre propre dinosaure, et de nombreuses activités</h2>
+		</div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/srv/app/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/srv/app/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+		<div
+			class="about">
+			{# A n'afficher que si le visiteur n'est pas connecté #}
+			<h3>Partez à la découverte des Tamagosaures</h3>
+			<p>
+				Avec Tamagosaurus, vous pourrez vous occuper de votre propre Tamagosaure, lui donner à manger,
+												            le promener, découvrir des anecdotes sur son espèces, etc... Alors n'hésitez plus et inscrivez-vous !
+			</p>
+			<p>
+				{# Lien uniquement si l'utilisateur n'a pas encore de tamagosaurus et EST CONNECTE #}
+				<a class="btn btn-primary" href="{{ path('app_egg') }}">Ouvre un oeuf !</a>
+			</p>
+		</div>
+
+		<div class="users">
+			<button id="login" class="btn btn-primary" onclick="openLogin()">Se connecter</button>
+			<button id="register" class="btn btn-secondary" onclick="openRegister()">S'inscrire</button>
+		</div>
+
+		<div id="loginForm" class="formHidden">
+			<p>{{ render(controller(
+                'App\\Controller\\LoginController::loginForm'
+            )) }}
+			</p>
+			<p>
+				<button id="cancelLogin" onclick="closeLogin()">X</button>
+			</p>
+		</div>
+
+		<div
+			id="registerForm" class="formHidden">
+			{# TODO: Registration #}
+			<p>Formulaire d'inscription</p>
+			<p>
+				<button id="cancelRegister" onclick="closeRegister()">X</button>
+			</p>
+		</div>
+
+
+		<script src="/js/api/request.js"></script>
+		<script src="{{ asset('build/js/home.js' )}}"></script>
+	</main>
+
 {% endblock %}

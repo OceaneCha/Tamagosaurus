@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\TamagosaurusRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TamagosaurusRepository::class)]
@@ -21,9 +22,12 @@ class Tamagosaurus
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tamagosauruses')]
+    #[ORM\ManyToOne(inversedBy: 'tamagosauruses', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: true)]
     private ?Species $type = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $lastFed = null;
 
 
 
@@ -68,6 +72,18 @@ class Tamagosaurus
     public function setType(?Species $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getLastFed(): ?\DateTimeInterface
+    {
+        return $this->lastFed;
+    }
+
+    public function setLastFed(?\DateTimeInterface $lastFed): self
+    {
+        $this->lastFed = $lastFed;
 
         return $this;
     }

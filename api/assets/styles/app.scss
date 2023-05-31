@@ -1,0 +1,57 @@
+@import "custom";
+@import '~bootstrap';
+
+
+body {
+    
+    background-image: url('../images/background-blue.png') no-repeat center center fixed;
+    background-size: cover;
+
+    /*autres priority de l'image de fond*/
+    }
+
+
+.container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;  
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    /*autres priority de l'image de fond*/
+    }
+
+// h1 {
+//     color: $primary;
+// }
+
+// h2 {
+//     color: $primary;
+// }
+
+ .button-eat {  
+  width: 150px;
+ border-radius:30px ;
+-webkit-border-radius:30px ;
+ -moz-border-radius:30px ;
+-ms-border-radius:30px ;
+-o-border-radius:30px ; 
+
+}
+
+.diplosaure-aquaticus{
+    width: 45px;
+}
+
+.element-visible {
+    display: inherit;
+}
+
+.element-hidden {
+    display: none;
+}
+
+
+

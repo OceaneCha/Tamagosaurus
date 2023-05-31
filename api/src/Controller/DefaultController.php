@@ -14,8 +14,10 @@ class DefaultController extends AbstractController
     public function index(): Response
     {
         $saurus = new Tamagosaurus(5);
+        $saurus->setName("Diplosaure Aquaticus");
         return $this->render('default/index.html.twig', [
-            'controller_name' => 'DefaultController',
+            'controller_name' => 'DefaultController', 
+            'tamagosauru' => $saurus,
         ]);
     }
 }

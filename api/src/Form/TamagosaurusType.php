@@ -14,7 +14,8 @@ class TamagosaurusType extends AbstractType
         $builder
 
             ->add('name')
-            ->add('type', null, ['choice_label' => 'name']);
+            // ->add('type', null, ['choice_label' => 'name'])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
