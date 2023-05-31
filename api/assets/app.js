@@ -6,8 +6,21 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import "./styles/app.scss";
-import "./styles/classChanges.css";
+import './styles/app.css';
+import './styles/classChanges.css';
 
 // start the Stimulus application
-import "./bootstrap";
+import './bootstrap';
+
+require('./js/dinosaur');
+
+// const THREE = require('three');
+
+// const OrbitControls = require('three/examples/jsm/controls/OrbitControls.js');
+// const FBXLoader = require("three/examples/jsm/loaders/FBXLoader");
+// const OBJLoader = require("three/examples/jsm/loaders/OBJLoader");
+// const GLTFLoader = require("three/examples/jsm/loaders/GLTFLoader");
+
+// import * as THREE from "three";
+
+

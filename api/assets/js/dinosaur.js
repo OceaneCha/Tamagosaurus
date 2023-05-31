@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from "./three/three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
 // import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 // import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
@@ -7,7 +7,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders//GLTFLoader";
 
 // Models
 
-const dinoUrl = new URL("api/assets/source/trex1.glb", import.meta.url);
+const dinoUrl = new URL("../source/trex1.glb", import.meta.url);
 
 // Initialization
 
