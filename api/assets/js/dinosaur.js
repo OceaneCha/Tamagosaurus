@@ -150,8 +150,9 @@ assetLoader.load(
     const m = new THREE.AnimationMixer(gltf.scene);
     mixer = m;
 
-    for (let i = 0; i < gltf.animations.length; ++i) {
-      if (gltf.animations[i].name.includes('bite', 'roar', 'run', 'attack_tail', 'idle')) {
+    for (let i = 0; i < gltf.animations.length; ++i) {+-
+      ['bite', 'roar', 'run', 'attack_tail', 'idle'].includes(gltf.animations[i].name)
+      if (['bite', 'roar', 'run', 'attack_tail', 'idle'].includes(gltf.animations[i].name)) {
         const clip = gltf.animations[i];
 
         animationClips.push(clip);
