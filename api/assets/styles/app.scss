@@ -5,8 +5,6 @@ body {
     background-image: url('../images/backgrounds/background-blue-one.png') no-repeat center center fixed;
     background-size: cover;
     background-repeat: no-repeat;
-    
-
     /*autres priority de l'image de fond*/
     }
 
@@ -23,6 +21,12 @@ body {
     /*autres priority de l'image de fond*/
     }
 
+.custom-width-container {
+        max-width: 1272px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
 // h1 {
 //     color: $primary;
 // }
@@ -31,7 +35,7 @@ body {
 //     color: $primary;
 // }
 
- .button-eat {  
+.button-eat {  
   width: 150px;
  border-radius:30px ;
 -webkit-border-radius:30px ;
@@ -47,11 +51,20 @@ body {
 
 .element-visible {
     display: inherit;
+    visibility:visible;
 }
 
 .element-hidden {
     display: none;
+    visibility: hidden;
 }
+
+.neon-effect {
+    background-color: #fff; /* Couleur de fond */
+    box-shadow: 0 0 10px 5px rgba(255, 105, 180, 0.7); /* Ombre rose diffuse */
+}
+
+
 
 
 

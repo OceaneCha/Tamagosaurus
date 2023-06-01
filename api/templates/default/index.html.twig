@@ -13,7 +13,6 @@
                 background-size: cover;
                 background-repeat: no-repeat;
                 background-position: center center;
-
                 /*autres priority de l'image de fond*/
                 }
         </style>
@@ -32,9 +31,11 @@
             {{ tamagosauru.name }}
         </div>
 
-        <img class="rounded mx-auto d-block" style="width: 20%;" src="{{ asset('build/images/dinosaures/diplosaure-aquaticus.png') }}" alt="Un mignon Tamagosaurus !"><br>
+    <div class="bg-white p-4 custom-padding neon-effect pt-5">
+    <img class="rounded mx-auto d-block" style="width: 30%" src="{{ asset('build/images/dinosaures/diplosaure-aquaticus.png') }}" alt="Un mignon Tamagosaurus !"><br>
+    </div>
 
-        <p class="text-success">Faim : <span id="dino-hunger"></span></p>
+        <p class="text-success pt-5">Faim : <span id="dino-hunger"></span></p>
         <h2 class="text-success h2">Donnez lui à manger<h2>
         <p class="lead text-success">Nourrissez le chaque jour, vous disposez diverses aliments.</p>
 
@@ -46,13 +47,14 @@
             <button class="btn btn-primary">test</button>
         </div>
 
-        <div id="options-locations" class="element-hidden">
+        <div id="options-locations" class="d-flex flex-row justify-content-center element-hidden">
             {% for location in destinations %}
-            <a role="button" href="{{ path('app_stroll_go', { destination: location.id }) }}" class="btn btn-primary">{{ location.name }}</a>
+            <a role="button" href="{{ path('app_stroll_go', { destination: location.id }) }}" class="btn btn-primary btn-lg text-uppercase text-white" style="margin-left: 40px; margin-right: 40px; margin-bottom: 40px; margin-top: 40px">{{ location.name }}</a>
             {% endfor %}
         
         </div>
         {% include 'layout/_buttons-option.html.twig' %}
+        {% include 'footer/_footer.html.twig' %}
     </div>
 
 <script src="/build/js/api/request.js"></script>
