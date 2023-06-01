@@ -3,11 +3,7 @@
     'App\\Controller\\LoginController::loginForm'
 )) }}
 #}
-{% extends 'base.html.twig' %}
 
-{% block title %}Hello LoginController!{% endblock %}
-
-{% block body %}
 {% if error %}
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
@@ -23,7 +19,5 @@
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
     <br>
-    <button class="btn-primary" type="submit">login</button>
+    <button class="btn btn-primary" type="submit">login</button>
 </form>
-
-{% endblock %}
