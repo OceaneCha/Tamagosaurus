@@ -17,15 +17,13 @@ class TamagosaurusFixtures extends Fixture
     // ];
     public function load(ObjectManager $manager): void
     {
-        // foreach (self::TYPES as $type) {
+
         $saurus = new Tamagosaurus();
-        $type = new Species();
-        $type->setName('T-Rex');
-        $saurus->setType($type);
-        $saurus->setName('YY');
+        // $saurus->setType($type);
+        $saurus->setName('John');
         $manager->persist($saurus);
-        // $this->addReference('Tamagosaurus_1', $saurus);
-        // }
+        // $this->addReference('Tamagosaurus_' , $saurus);
+
         $manager->flush();
     }
 }

@@ -19,22 +19,11 @@ class StrollController extends AbstractController
         ]);
     }    
 
-#[Route('/{destination}', name: 'go')]
+    #[Route('/{destination}', name: 'go')]
     public function goTo(Destination $destination, DestinationRepository $destinationRepository): Response
     {
-        // $locations = [
-        //     'au parc',
-        //     'à la plage',
-        //     'à la montagne',
-        //     'en ville',
-        //     'dans la jungle',
-        // ];
-
-        // $destination = $locations[$location];
-
         return $this->render('stroll/show.html.twig', [
             'destination' => $destination,
         ]);
     }
-
 }
