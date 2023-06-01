@@ -7,6 +7,7 @@ use App\Form\TamagosaurusType;
 use App\Repository\DestinationRepository;
 use App\Repository\TamagosaurusRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,13 +18,19 @@ class TamagosaurusController extends AbstractController
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(TamagosaurusRepository $tamagosaurusRepository, DestinationRepository $destinationRepository): Response
     {
-        // Modify render template later
-        $saurus = new Tamagosaurus();
-        $saurus->setName('John');
-
         $destinations = $destinationRepository->findAll();
 
-
+        if (
+            $this->isGranted('ROLE_USER')
+        ) {
+            $user = $this->getUser();
+            $sauruses = $user->getTamagosauruses();
+            $saurus = $sauruses->first();
+        } else {
+            $saurus = new Tamagosaurus;
+            $saurus->setName("Diplosaure Aquaticus");
+        }        
+        
         return $this->render('default/index.html.twig', [
             'tamagosauruses' => $tamagosaurusRepository->findAll(),
             'tamagosauru' => $saurus,
@@ -34,8 +41,8 @@ class TamagosaurusController extends AbstractController
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(Request $request, TamagosaurusRepository $tamagosaurusRepository): Response
     {
-        $tamagosauru = new Tamagosaurus();
-        $form = $this->createForm(TamagosaurusType::class, $tamagosauru);
+        $tamagosaurus = new Tamagosaurus();
+        $form = $this->createForm(TamagosaurusType::class, $tamagosaurus);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -43,11 +50,11 @@ class TamagosaurusController extends AbstractController
             // En fonction de l'oeuf sélectionné par l'utilisateur
             //
             // $tamagosauru->setType($type);
-            $tamagosauru->setOwner($this->getUser());
+            $tamagosaurus->setOwner($this->getUser());
             //
             // OU
             // Utiliser les méthodes d'API-Platform (POST) plutôt que le formulaire
-            $tamagosaurusRepository->save($tamagosauru, true);
+            $tamagosaurusRepository->save($tamagosaurus, true);
 
             $this->addFlash('success', 'The tamagosaurus has been named!');
 
@@ -55,7 +62,7 @@ class TamagosaurusController extends AbstractController
         }
 
         return $this->render('tamagosaurus/new.html.twig', [
-            'tamagosauru' => $tamagosauru,
+            'tamagosauru' => $tamagosaurus,
             'form' => $form,
         ]);
     }

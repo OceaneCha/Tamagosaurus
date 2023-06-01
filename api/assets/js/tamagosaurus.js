@@ -1,14 +1,24 @@
 // this variable contains all of our saurus's info
 let saurus;
+let tamagosaurusId;
+
+document.addEventListener('DOMContentLoaded', function() {
+  // var user = JSON.parse(userRating.dataset.user);
+
+  // or with jQuery
+  //var isAuthenticated = $('.js-user-rating').data('isAuthenticated');
+});
 
 // On load, we update the saurus's hunger
 // 'true' forces a fetch request
 window.onload = function () {
+  var tamagosaurus = document.querySelector('#tamagosaurus');
+  tamagosaurusId = tamagosaurus.dataset.tamagosaurusId;
   updateHunger(0, true);
 };
 
 async function fetchSaurus() {
-  return await getRequest("/tamagosauruses/11");
+  return await getRequest(`/tamagosauruses/${tamagosaurusId}`);
 }
 
 // We restrict fetchSaurus() to be used only with force
@@ -17,7 +27,7 @@ async function fetchSaurus() {
 async function updateHunger(newHunger = 0, force = false) {
   if (force) {
     saurus = await fetchSaurus();
-    console.log(saurus);
+    // console.log(saurus);
     newHunger = saurus.hunger;
   }
   document.getElementById("dino-hunger").innerHTML = newHunger;
