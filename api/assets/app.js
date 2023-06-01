@@ -12,6 +12,7 @@ import './styles/app.scss';
 import './bootstrap';
 
 require('./js/dinosaur.js');
+require('./js/backendDino.js');
 
 // const THREE = require('three');
 
