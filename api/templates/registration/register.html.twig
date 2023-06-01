@@ -6,7 +6,11 @@
     <h1>Register</h1>
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
+        {# {{ form_label(registrationForm.username, 'Username', { 'label_attr': {'class': 'bg-primary text-primary'}}) }} #}
+        {{ form_row(registrationForm.username, {
+            'label_attr': {'class': 'bg-primary text-primary'},
+            'attr': {'class': 'pink-field'}
+            }) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
