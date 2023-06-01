@@ -40,12 +40,19 @@
     <div id="registerForm" class="formHidden">
         {# TODO: Registration #}
         <p>Formulaire d'inscription<p>
+
+        <p>
+            {{ render(controller(
+                'App\\Controller\\RegistrationController::register'
+            )) }}
+        </p>
         <button id="cancelRegister" onClick="closeRegister()">X</button>
     </div>
 
 
-    <script src="/js/api/request.js"></script>
-    <script src="/js/home.js"></script>
+    <script src="/build/js/api/request.js"></script>
+    <script src="/build/js/home.js"></script>
+    <script src="/build/js/tamagosaurus.js"></script>
 </main>
 
 {% endblock %}
