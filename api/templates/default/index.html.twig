@@ -8,31 +8,25 @@
 {% block stylesheets %}
         {{ parent() }}
         <style>
-            body { 
-                background-image: url({{ asset("build/images/background-blue-one.png") }});
+            body {
+                background-image: url({{ asset("build/images/backgrounds/background-blue-one.png") }});
                 background-size: cover;
                 background-repeat: no-repeat;
                 background-position: center center;
-                width : 428px;
-                max-height: 926px;
+
                 /*autres priority de l'image de fond*/
                 }
         </style>
 {% endblock %}
 
 {% block body %}
-{# <img style="width: 50%;" src="/images/background-home.jpg" alt="Le mopnde virtuel des Tamagosaurus!"><br> #}
-{# <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style> #}
 
 <body class="container">
     <div>
         <h1 class="display-2 text-success h1 text-center font-poppins">Mon premier Tamagosaurus</h1>
         <div class="text-primary display-1 text-center font-weight-bold">{{ tamagosauru.name }}</div>
 
-        <img class="rounded mx-auto d-block" style="width: 20%;" src="{{ asset('build/images/diplosaure-aquaticus.png') }}" alt="Un mignon Tamagosaurus !"><br>
+        <img class="rounded mx-auto d-block" style="width: 20%;" src="{{ asset('build/images/dinosaures/diplosaure-aquaticus.png') }}" alt="Un mignon Tamagosaurus !"><br>
 
         <p class="text-success">Faim : <span id="dino-hunger"></span></p>
         <h2 class="text-success h2">Donnez lui à manger<h2>
@@ -47,8 +41,10 @@
         </div>
 
         <div id="options-locations" class="element-hidden">
-            <a role="button" href="{{ path('app_stroll_go', { location: 0 }) }}" class="btn btn-primary">Parc</a>
-            <button class="btn btn-primary">Plage</button>
+            {% for location in destinations %}
+            <a role="button" href="{{ path('app_stroll_go', { destination: location.id }) }}" class="btn btn-primary">{{ location.name }}</a>
+            {% endfor %}
+        
         </div>
         {% include 'layout/_buttons-option.html.twig' %}
     </div>

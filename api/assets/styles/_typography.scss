@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/poppins.woff2') format('woff2'),
+         url('../fonts/poppins.woff') format('woff');
+    /* Ajoutez d'autres variantes de police si nécessaire */
+  }
+  
+  /* Exemple d'utilisation de la police Poppins */
+  body {
+    font-family: 'Poppins', sans-serif;
+  }
+  

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Tamagosaurus;
 use App\Form\TamagosaurusType;
+use App\Repository\DestinationRepository;
 use App\Repository\TamagosaurusRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,14 +15,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class TamagosaurusController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
-    public function index(TamagosaurusRepository $tamagosaurusRepository): Response
+    public function index(TamagosaurusRepository $tamagosaurusRepository, DestinationRepository $destinationRepository): Response
     {
         // Modify render template later
         $saurus = new Tamagosaurus();
         $saurus->setName('John');
+
+        $destinations = $destinationRepository->findAll();
+
+
         return $this->render('default/index.html.twig', [
             'tamagosauruses' => $tamagosaurusRepository->findAll(),
             'tamagosauru' => $saurus,
+            'destinations' => $destinations,
         ]);
     }
 
