@@ -29,6 +29,9 @@ class Tamagosaurus
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $lastFed = null;
 
+    #[ORM\ManyToOne(inversedBy: 'tamagosauruses')]
+    private ?User $owner = null;
+
 
 
     public function __construct()
@@ -84,6 +87,18 @@ class Tamagosaurus
     public function setLastFed(?\DateTimeInterface $lastFed): self
     {
         $this->lastFed = $lastFed;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }

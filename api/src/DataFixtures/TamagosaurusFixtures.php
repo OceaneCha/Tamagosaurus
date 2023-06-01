@@ -6,9 +6,10 @@ use App\Entity\Species;
 use App\Entity\Tamagosaurus;
 use App\Repository\SpeciesRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class TamagosaurusFixtures extends Fixture
+class TamagosaurusFixtures extends Fixture implements DependentFixtureInterface
 {
     // public const TYPES = [
     //     'T-rex',
@@ -21,9 +22,17 @@ class TamagosaurusFixtures extends Fixture
         $saurus = new Tamagosaurus();
         // $saurus->setType($type);
         $saurus->setName('John');
+        $saurus->setOwner($this->getReference('admin_user'));
         $manager->persist($saurus);
         // $this->addReference('Tamagosaurus_' , $saurus);
 
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return [
+            UserFixtures::class,
+        ];
     }
 }

@@ -24,7 +24,13 @@
 <body class="container">
     <div>
         <h1 class="display-2 text-success h1 text-center font-poppins">Mon premier Tamagosaurus</h1>
-        <div class="text-primary display-1 text-center font-weight-bold">{{ tamagosauru.name }}</div>
+        <div
+            id="tamagosaurus"
+            class="text-primary display-1 text-center font-weight-bold"
+            data-tamagosaurus-id="{{tamagosauru.id}}"
+        >
+            {{ tamagosauru.name }}
+        </div>
 
         <img class="rounded mx-auto d-block" style="width: 20%;" src="{{ asset('build/images/dinosaures/diplosaure-aquaticus.png') }}" alt="Un mignon Tamagosaurus !"><br>
 
