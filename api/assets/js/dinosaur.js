@@ -21,6 +21,10 @@ if (dinoRender) {
   const textureSteakUrl = new URL("../source/Steak.mtl", import.meta.url);
   const treeUrl = new URL("../source/CommonTree_1.obj", import.meta.url);
   const textureTreeUrl = new URL("../source/CommonTree_1.mtl", import.meta.url);
+  const bush1Url = new URL("../source/Bush_1.obj", import.meta.url);
+  const textureBush1Url = new URL("../source/Bush_1.mtl", import.meta.url);
+  const bush2Url = new URL("../source/Bush_2.obj", import.meta.url);
+  const textureBush2Url = new URL("../source/Bush_2.mtl", import.meta.url);
 
   // Initialization
 
@@ -65,7 +69,7 @@ if (dinoRender) {
   //Plane
   const planeGeometry = new THREE.PlaneGeometry(30, 30);
   const planeMaterial = new THREE.MeshLambertMaterial({
-    color: 0xffffff,
+    color: 0x084518,
     side: THREE.DoubleSide,
   });
   const plane = new THREE.Mesh(planeGeometry, planeMaterial);
@@ -77,28 +81,28 @@ if (dinoRender) {
   const vertexShader = `
   varying vec2 vUv;
   uniform float time;
-  
+
 	void main() {
 
     vUv = uv;
-    
+
     // VERTEX POSITION
-    
+
     vec4 mvPosition = vec4( position, 1.0 );
     #ifdef USE_INSTANCING
     	mvPosition = instanceMatrix * mvPosition;
     #endif
-    
+
     // DISPLACEMENT
-    
+
     // here the displacement is made stronger on the blades tips.
     float dispPower = 1.0 - cos( uv.y * 3.1416 / 2.0 );
-    
+
     float displacement = sin( mvPosition.z + time * 10.0 ) * ( 0.1 * dispPower );
     mvPosition.z += displacement;
-    
+
     //
-    
+
     vec4 modelViewPosition = modelViewMatrix * mvPosition;
     gl_Position = projectionMatrix * modelViewPosition;
 
@@ -107,7 +111,7 @@ if (dinoRender) {
 
   const fragmentShader = `
   varying vec2 vUv;
-  
+
   void main() {
   	vec3 baseColor = vec3( 0.41, 1.0, 0.5 );
     float clarity = ( vUv.y * 0.5 ) + 0.5;
@@ -136,7 +140,7 @@ if (dinoRender) {
   const dummy = new THREE.Object3D();
 
   const geometry = new THREE.PlaneGeometry(0.1, 1, 1, 4);
-  geometry.translate(0, 0.5, 0); // move grass blade geometry lowest point at 0.
+  geometry.translate(20, 0.5, -5); // move grass blade geometry lowest point at 0.
 
   const instancedMesh = new THREE.InstancedMesh(geometry, leavesMaterial, instanceNumber);
 
@@ -166,15 +170,17 @@ if (dinoRender) {
 
   const assetLoader = new GLTFLoader();
   let mixer;
+  let model;
   const animationClips = [];
   assetLoader.load(
     dinoUrl.href,
     function (gltf) {
-      const model = gltf.scene;
+      model = gltf.scene;
       console.log(gltf.animations);
       scene.add(model);
       model.position.set(0, 0, 0);
       model.scale.set(1, 1, 1);
+      model.castShadow = true;
 
       const m = new THREE.AnimationMixer(gltf.scene);
       mixer = m;
@@ -199,7 +205,12 @@ if (dinoRender) {
       // const animationAction = mixer.clipAction((model).animations[0]);
       // animationActions.push(animationAction);
       // activeAction = animationActions[0];
-      setInterval(playRandomAnimation, 10000);
+      if (localStorage.getItem('steakEnabled') == true) {
+        setInterval(playRandomAnimation, 10000);
+      } else {
+        animationSpecified();
+      }
+
     },
     undefined,
     function (error) {
@@ -215,6 +226,13 @@ if (dinoRender) {
     console.log(action);
   }
 
+  function animationSpecified() {
+    const clip = animationClips[1];
+    const action = mixer.clipAction(clip);
+    action.reset().play();
+    console.log(action);
+  }
+
 
   // const anim = new GLTFLoader();
   // anim.load(dinoUrl.href, (anim) => {
@@ -222,36 +240,45 @@ if (dinoRender) {
   //   const idle = this.mixer.clipAction(anim.animations[0]);
   //   idle.play();
   // });
-  // 
+  //
 
 
   // Steak
+
+
   const textureSteakLoader = new MTLLoader();
-  textureSteakLoader.load(
-    textureSteakUrl.href,
-    function (materials) {
-      materials.preload();
+  let steak;
 
-      const steakLoader = new OBJLoader();
-      steakLoader.setMaterials(materials);
-      steakLoader.load(
-        steakUrl.href,
-        function (obj) {
-          const steak = obj;
-          console.log(obj.animations);
-          scene.add(steak);
-          steak.position.set(3, 5, 5);
-          steak.scale.set(1, 1, 1);
-        },
-        undefined,
-        function (error) {
-          console.error(error);
-        }
-      );
-    }
-  )
+  if (localStorage.getItem('steakEnabled') == true) {
 
-  //Burger 
+    textureSteakLoader.load(
+      textureSteakUrl.href,
+      function (materials) {
+        materials.preload();
+
+        const steakLoader = new OBJLoader();
+        steakLoader.setMaterials(materials);
+        steakLoader.load(
+          steakUrl.href,
+          function (obj) {
+            steak = obj;
+            console.log(obj.animations);
+            scene.add(steak);
+            steak.position.set(2, 0, 7);
+            steak.scale.set(1, 1, 1);
+            console.log('hello');
+          },
+          undefined,
+          function (error) {
+            console.error(error);
+          }
+        );
+      }
+    )
+  }
+
+
+  //Burger
   const textureBurgerLoader = new MTLLoader();
   textureBurgerLoader.load(
     textureBurgerUrl.href,
@@ -293,7 +320,7 @@ if (dinoRender) {
           console.log(obj.animations);
           scene.add(tree);
           tree.position.set(3, 0, -5);
-          tree.scale.set(10, 10, 10);
+          tree.scale.set(5, 5, 5);
         },
         undefined,
         function (error) {
@@ -303,12 +330,63 @@ if (dinoRender) {
     }
   )
 
+  //Bushes
+
+  const textureBush1Loader = new MTLLoader();
+  textureBush1Loader.load(
+    textureBush1Url.href,
+    function (materials) {
+      materials.preload();
+
+      const bush1Loader = new OBJLoader();
+      bush1Loader.setMaterials(materials);
+      bush1Loader.load(
+        bush1Url.href,
+        function (obj) {
+          const bush = obj;
+          console.log(obj.animations);
+          scene.add(bush);
+          bush.position.set(-6, 0, 5);
+          bush.scale.set(2, 2, 2);
+        },
+        undefined,
+        function (error) {
+          console.error(error);
+        }
+      );
+    }
+  )
+
+  const textureBush2Loader = new MTLLoader();
+  textureBush2Loader.load(
+    textureBush2Url.href,
+    function (materials) {
+      materials.preload();
+
+      const bush2Loader = new OBJLoader();
+      bush2Loader.setMaterials(materials);
+      bush2Loader.load(
+        bush2Url.href,
+        function (obj) {
+          const bush = obj;
+          console.log(obj.animations);
+          scene.add(bush);
+          bush.position.set(-7, 0, -8);
+          bush.scale.set(2, 2, 2);
+        },
+        undefined,
+        function (error) {
+          console.error(error);
+        }
+      );
+    }
+  )
   // Light
 
   const ambientLight = new THREE.AmbientLight(0x333333);
   scene.add(ambientLight);
 
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
   scene.add(directionalLight);
   directionalLight.position.x = 30;
   directionalLight.position.y = 20;
@@ -318,17 +396,48 @@ if (dinoRender) {
   const dLightHelper = new THREE.DirectionalLightHelper(directionalLight);
   scene.add(dLightHelper);
 
+  // const initialVelocity = new THREE.Vector3(0, 10, -10); // Initial velocity of the object
+  // const gravity = new THREE.Vector3(0, -9.8, 0); // Gravity vector
+  // let position = new THREE.Vector3(15, 15, 5); // Current position of the object
+  // let velocity = initialVelocity.clone(); // Current velocity of the object
+  // let time = 0; // Current time
   let step = 0;
-let speed = 0.01;
+  let speed = 0.03;
   const clock = new THREE.Clock();
+
+
   function animate() {
     if (mixer) {
       mixer.update(clock.getDelta());
     }
+
+    if (localStorage.getItem('steakEnabled') == true) {
+      console.log(steakEnabled);
+      console.log(steak);
+      console.log(steak.position.x);
+      step += speed;
+      steak.position.y = 10 * Math.abs(Math.sin(step));
+      steak.position.x = 15 * Math.abs(Math.sin(step));
+    }
+    // if (steak) {
+    //   while (steak.position > (2,0,7)) {
+    //     // Update position based on velocity and time
+    //   position.add(velocity.clone().multiplyScalar(time));
+
+    //   // Apply gravity to the velocity
+    //   velocity.add(gravity.clone().multiplyScalar(time));
+
+    //   // Update object position
+    //   steak.position.copy(position);
+    //   console.log(steak.position);
+    //   // Increment time
+    //   time += 0.0001;
+    // }
+    //   }
+
     // setInterval(playRandomAnimation, 100);
 
-    step += speed;
-  steakLoader.position.y = 10 * Math.abs(Math.sin(step));
+
 
     leavesMaterial.uniforms.time.value = clock.getElapsedTime();
     leavesMaterial.uniformsNeedUpdate = true;
