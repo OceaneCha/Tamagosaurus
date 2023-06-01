@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Destination;
+use App\Repository\DestinationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,20 +17,24 @@ class StrollController extends AbstractController
         return $this->render('stroll/index.html.twig', [
             'controller_name' => 'StrollController',
         ]);
-    }
+    }    
 
-    #[Route('/{location}', name: 'go')]
-    public function goTo(int $location): Response
+#[Route('/{destination}', name: 'go')]
+    public function goTo(Destination $destination, DestinationRepository $destinationRepository): Response
     {
-        $locations = [
-            'parc',
-            'plage',
-        ];
+        // $locations = [
+        //     'au parc',
+        //     'à la plage',
+        //     'à la montagne',
+        //     'en ville',
+        //     'dans la jungle',
+        // ];
 
-        $destination = $locations[$location];
+        // $destination = $locations[$location];
 
         return $this->render('stroll/show.html.twig', [
             'destination' => $destination,
         ]);
     }
+
 }
