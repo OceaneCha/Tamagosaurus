@@ -1,8 +1,9 @@
 import * as THREE from "./three/three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 // import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
-// import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import { GLTFLoader } from "three/examples/jsm/loaders//GLTFLoader";
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 
 // TO-DO si l'élément existe exécuter
 const dinoRender = document.querySelector("#dino-render");
@@ -12,6 +13,14 @@ if (dinoRender) {
 
   const dinoUrl = new URL("../source/trex1.glb", import.meta.url);
   const backgroundUrl = new URL("../images/backgrounds/park.jpg", import.meta.url);
+  const pattyUrl = new URL("../source/BurgerPatty_Raw.obj", import.meta.url);
+  const texturePattyUrl = new URL("../source/BurgerPatty_Raw.mtl", import.meta.url);
+  const burgerUrl = new URL("../source/Burger.obj", import.meta.url);
+  const textureBurgerUrl = new URL("../source/Burger.mtl", import.meta.url);
+  const steakUrl = new URL("../source/Steak.obj", import.meta.url);
+  const textureSteakUrl = new URL("../source/Steak.mtl", import.meta.url);
+  const treeUrl = new URL("../source/CommonTree_1.obj", import.meta.url);
+  const textureTreeUrl = new URL("../source/CommonTree_1.mtl", import.meta.url);
 
   // Initialization
 
@@ -54,7 +63,17 @@ if (dinoRender) {
   // Objects
 
   //Plane
+  const planeGeometry = new THREE.PlaneGeometry(30, 30);
+  const planeMaterial = new THREE.MeshLambertMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide,
+  });
+  const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+  scene.add(plane);
+  plane.rotation.x = -0.5 * Math.PI;
+  plane.receiveShadow = true;
 
+  // Grass
   const vertexShader = `
   varying vec2 vUv;
   uniform float time;
@@ -205,6 +224,85 @@ if (dinoRender) {
   // });
   // 
 
+
+  // Steak
+  const textureSteakLoader = new MTLLoader();
+  textureSteakLoader.load(
+    textureSteakUrl.href,
+    function (materials) {
+      materials.preload();
+
+      const steakLoader = new OBJLoader();
+      steakLoader.setMaterials(materials);
+      steakLoader.load(
+        steakUrl.href,
+        function (obj) {
+          const steak = obj;
+          console.log(obj.animations);
+          scene.add(steak);
+          steak.position.set(3, 5, 5);
+          steak.scale.set(1, 1, 1);
+        },
+        undefined,
+        function (error) {
+          console.error(error);
+        }
+      );
+    }
+  )
+
+  //Burger 
+  const textureBurgerLoader = new MTLLoader();
+  textureBurgerLoader.load(
+    textureBurgerUrl.href,
+    function (materials) {
+      materials.preload();
+
+      const burgerLoader = new OBJLoader();
+      burgerLoader.setMaterials(materials);
+      burgerLoader.load(
+        burgerUrl.href,
+        function (obj) {
+          const burger = obj;
+          console.log(obj.animations);
+          scene.add(burger);
+          burger.position.set(3, 5, -5);
+          burger.scale.set(1, 1, 1);
+        },
+        undefined,
+        function (error) {
+          console.error(error);
+        }
+      );
+    }
+  )
+
+  //Tree
+  const textureTreeLoader = new MTLLoader();
+  textureTreeLoader.load(
+    textureTreeUrl.href,
+    function (materials) {
+      materials.preload();
+
+      const treeLoader = new OBJLoader();
+      treeLoader.setMaterials(materials);
+      treeLoader.load(
+        treeUrl.href,
+        function (obj) {
+          const tree = obj;
+          console.log(obj.animations);
+          scene.add(tree);
+          tree.position.set(3, 0, -5);
+          tree.scale.set(10, 10, 10);
+        },
+        undefined,
+        function (error) {
+          console.error(error);
+        }
+      );
+    }
+  )
+
   // Light
 
   const ambientLight = new THREE.AmbientLight(0x333333);
@@ -220,6 +318,8 @@ if (dinoRender) {
   const dLightHelper = new THREE.DirectionalLightHelper(directionalLight);
   scene.add(dLightHelper);
 
+  let step = 0;
+let speed = 0.01;
   const clock = new THREE.Clock();
   function animate() {
     if (mixer) {
@@ -227,6 +327,8 @@ if (dinoRender) {
     }
     // setInterval(playRandomAnimation, 100);
 
+    step += speed;
+  steakLoader.position.y = 10 * Math.abs(Math.sin(step));
 
     leavesMaterial.uniforms.time.value = clock.getElapsedTime();
     leavesMaterial.uniformsNeedUpdate = true;
