@@ -36,7 +36,7 @@ class DefaultController extends AbstractController
     #[Route('/dino', name: 'dino')]
     public function dino(): Response
     {
-        $saurus = new Tamagosaurus(5);
+        $saurus = new Tamagosaurus();
         $saurus->setName("Diplosaure Aquaticus");
         return $this->render('default/dino.html.twig', [
             'controller_name' => 'DefaultController', 

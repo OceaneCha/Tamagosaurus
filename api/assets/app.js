@@ -12,8 +12,9 @@ import './styles/app.scss';
 import './bootstrap';
 
 require('./mdb/js/mdb.pro');
-require('./js/dinosaur.js');
-require('./js/tamagosaurus.js');
+// require('./js/dinosaur.js');
+// require('./js/api/request');
+// require('./js/tamagosaurus.js');
 
 // const THREE = require('three');
 
