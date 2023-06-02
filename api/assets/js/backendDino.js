@@ -1,5 +1,5 @@
 localStorage.setItem("steakEnabled", false);
 
-function feed() {
+export function feed3D() {
    localStorage.setItem("steakEnabled", true);
 }

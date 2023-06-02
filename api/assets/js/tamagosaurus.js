@@ -1,13 +1,40 @@
 // this variable contains all of our saurus's info
 let saurus;
 let tamagosaurusId;
+localStorage.setItem("steakEnabled", false);
 
-document.addEventListener('DOMContentLoaded', function() {
-  // var user = JSON.parse(userRating.dataset.user);
+function loadSteak() {
+  const textureSteakLoader = new MTLLoader();
+  let steak;
 
-  // or with jQuery
-  //var isAuthenticated = $('.js-user-rating').data('isAuthenticated');
-});
+  if (localStorage.getItem('steakEnabled') == true) {
+
+    textureSteakLoader.load(
+      textureSteakUrl.href,
+      function (materials) {
+        materials.preload();
+
+        const steakLoader = new OBJLoader();
+        steakLoader.setMaterials(materials);
+        steakLoader.load(
+          steakUrl.href,
+          function (obj) {
+            steak = obj;
+            console.log(obj.animations);
+            scene.add(steak);
+            steak.position.set(2, 0, 7);
+            steak.scale.set(1, 1, 1);
+            console.log('hello');
+          },
+          undefined,
+          function (error) {
+            console.error(error);
+          }
+        );
+      }
+    )
+  }
+}
 
 // On load, we update the saurus's hunger
 // 'true' forces a fetch request
@@ -41,6 +68,9 @@ async function feed(quantity) {
 
   saurus = await putRequest(saurus["@id"], json);
   updateHunger(saurus.hunger);
+
+  localStorage.setItem("steakEnabled", true);
+  loadSteak();
 }
 
 // TODO: this could be folded into feed()
@@ -78,6 +108,7 @@ function toggleOptions(elementId) {
     classes.replace(hidden, visible);
   }
 }
+
 
 // URL de souscription Mercure
 // const evtSource = new EventSource('https://localhost/.well-known/mercure?topic=https://localhost/<resource>/<id>')

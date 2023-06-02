@@ -1,5 +1,7 @@
 @import "custom";
 @import '~bootstrap';
+@import '../mdb/scss/mdb.pro.scss';
+@import './mdb.dark.min.css';
 
 body {
     background-image: url('../images/backgrounds/background-blue-one.png') no-repeat center center fixed;

@@ -5,6 +5,41 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 
+localStorage.setItem("steakEnabled", false);
+
+export function loadSteak() {
+  const textureSteakLoader = new MTLLoader();
+  let steak;
+
+  if (localStorage.getItem('steakEnabled') == true) {
+
+    textureSteakLoader.load(
+      textureSteakUrl.href,
+      function (materials) {
+        materials.preload();
+
+        const steakLoader = new OBJLoader();
+        steakLoader.setMaterials(materials);
+        steakLoader.load(
+          steakUrl.href,
+          function (obj) {
+            steak = obj;
+            console.log(obj.animations);
+            scene.add(steak);
+            steak.position.set(2, 0, 7);
+            steak.scale.set(1, 1, 1);
+            console.log('hello');
+          },
+          undefined,
+          function (error) {
+            console.error(error);
+          }
+        );
+      }
+    )
+  }
+}
+
 // TO-DO si l'élément existe exécuter
 const dinoRender = document.querySelector("#dino-render");
 
@@ -207,6 +242,7 @@ if (dinoRender) {
       // activeAction = animationActions[0];
       if (localStorage.getItem('steakEnabled') == true) {
         setInterval(playRandomAnimation, 10000);
+        console.log('random anim');
       } else {
         animationSpecified();
       }
@@ -245,37 +281,7 @@ if (dinoRender) {
 
   // Steak
 
-
-  const textureSteakLoader = new MTLLoader();
-  let steak;
-
-  if (localStorage.getItem('steakEnabled') == true) {
-
-    textureSteakLoader.load(
-      textureSteakUrl.href,
-      function (materials) {
-        materials.preload();
-
-        const steakLoader = new OBJLoader();
-        steakLoader.setMaterials(materials);
-        steakLoader.load(
-          steakUrl.href,
-          function (obj) {
-            steak = obj;
-            console.log(obj.animations);
-            scene.add(steak);
-            steak.position.set(2, 0, 7);
-            steak.scale.set(1, 1, 1);
-            console.log('hello');
-          },
-          undefined,
-          function (error) {
-            console.error(error);
-          }
-        );
-      }
-    )
-  }
+  
 
 
   //Burger

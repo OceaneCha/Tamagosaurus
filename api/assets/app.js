@@ -11,8 +11,9 @@ import './styles/app.scss';
 // start the Stimulus application
 import './bootstrap';
 
+require('./mdb/js/mdb.pro');
 require('./js/dinosaur.js');
-require('./js/backendDino.js');
+require('./js/tamagosaurus.js');
 
 // const THREE = require('three');
 
