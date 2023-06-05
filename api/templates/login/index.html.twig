@@ -8,8 +8,6 @@
     <p>Welcome {{ app.user.username }}!</p>
     <p><a href="{{path('app_logout')}}">Logout?</a></p>
     {% else %}
-    {{ render(controller(
-    'App\\Controller\\LoginController::loginForm'
-    )) }}
+        {% include 'login/_form.html.twig' %}
     {% endif %}
 {% endblock %}

@@ -25,13 +25,13 @@ class TamagosaurusController extends AbstractController
         ) {
             $user = $this->getUser();
             $sauruses = $user->getTamagosauruses();
-            $saurus = $sauruses->first();
+            $saurus = $sauruses->first(); //TODO: Create currentTamagosaurus property in Entity/User
         } else {
             $saurus = new Tamagosaurus;
             $saurus->setName("Diplosaure Aquaticus");
         }        
         
-        return $this->render('default/index.html.twig', [
+        return $this->render('tamagosaurus/index.html.twig', [
             'tamagosauruses' => $tamagosaurusRepository->findAll(),
             'tamagosauru' => $saurus,
             'destinations' => $destinations,

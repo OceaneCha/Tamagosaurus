@@ -1,5 +1,7 @@
 @import "custom";
 @import '~bootstrap';
+@import '../mdb/scss/mdb.pro.scss';
+@import './mdb.dark.min.css';
 
 body {
     background-image: url('../images/backgrounds/background-blue-one.png') no-repeat center center fixed;
@@ -46,11 +48,16 @@ body {
 }
 
 .element-visible {
-    display: inherit;
+    visibility: visible;
 }
 
 .element-hidden {
-    display: none;
+    visibility: hidden;
+}
+
+.neon-effect {
+    background-color: #fff; /* Couleur de fond */
+    box-shadow: 0 0 10px 5px rgba(255, 105, 180, 0.7); /* Ombre rose diffuse */
 }
 
 

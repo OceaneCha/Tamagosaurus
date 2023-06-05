@@ -1,13 +1,40 @@
 // this variable contains all of our saurus's info
 let saurus;
 let tamagosaurusId;
+localStorage.setItem("steakEnabled", false);
 
-document.addEventListener('DOMContentLoaded', function() {
-  // var user = JSON.parse(userRating.dataset.user);
+function loadSteak() {
+  const textureSteakLoader = new MTLLoader();
+  let steak;
 
-  // or with jQuery
-  //var isAuthenticated = $('.js-user-rating').data('isAuthenticated');
-});
+  if (localStorage.getItem('steakEnabled') == true) {
+
+    textureSteakLoader.load(
+      textureSteakUrl.href,
+      function (materials) {
+        materials.preload();
+
+        const steakLoader = new OBJLoader();
+        steakLoader.setMaterials(materials);
+        steakLoader.load(
+          steakUrl.href,
+          function (obj) {
+            steak = obj;
+            console.log(obj.animations);
+            scene.add(steak);
+            steak.position.set(2, 0, 7);
+            steak.scale.set(1, 1, 1);
+            console.log('hello');
+          },
+          undefined,
+          function (error) {
+            console.error(error);
+          }
+        );
+      }
+    )
+  }
+}
 
 // On load, we update the saurus's hunger
 // 'true' forces a fetch request
@@ -41,6 +68,9 @@ async function feed(quantity) {
 
   saurus = await putRequest(saurus["@id"], json);
   updateHunger(saurus.hunger);
+
+  localStorage.setItem("steakEnabled", true);
+  loadSteak();
 }
 
 // TODO: this could be folded into feed()
@@ -51,33 +81,30 @@ async function resetFood() {
   updateHunger();
 }
 
-// this function allows to show/hide a hidden element, and hide
-// other visible elements that use the same visibility class
-// elementId: enter the ID of the element you want to hide/show
-function toggleOptions(elementId) {
-  let classes = document.getElementById(elementId).classList;
+let lastToggle = null;
 
-  // define the classes used for hidden and visible elements
-  //   they should only be used for related elements, where only one is shown,
-  //   and the others are hidden again
+function toggleOptions(elementId, targetElementId) {
+  let element = document.getElementById(elementId);
+  let elementContent = element.innerHTML;
+  let targetElement = document.getElementById(targetElementId);
   let hidden = "element-hidden";
   let visible = "element-visible";
 
-  // if the element has visible, it becomes hidden
-  // if the element has hidden, it becomes visible, and all other elements
-  //   with visible become hidden
-  if (classes.contains(visible)) {
-    classes.replace(visible, hidden);
-  } else if (classes.contains(hidden)) {
-    let othersVisible = document.getElementsByClassName(visible);
-
-    for (element of othersVisible) {
-      element.classList.replace(visible, hidden);
+  if (lastToggle !== null && lastToggle === element) {
+    if (targetElement.classList.contains(hidden)) {
+      targetElement.classList.replace(hidden, visible);
+    } else {
+      targetElement.classList.replace(visible, hidden);
     }
-
-    classes.replace(hidden, visible);
+  } else {
+    targetElement.classList.replace(hidden, visible);
   }
+
+  lastToggle = element;
+
+  targetElement.innerHTML = elementContent;
 }
+
 
 // URL de souscription Mercure
 // const evtSource = new EventSource('https://localhost/.well-known/mercure?topic=https://localhost/<resource>/<id>')

@@ -5,26 +5,28 @@
 {% block body %}
 
 <main>
-    <div class="text-danger">
-        <h1>Tamagosaurus</h1>
-        <h2>Quel oeuf choisirez-vous ?</h2>
-    </div>
+    <div class="card col-md-10 mx-auto">
+        <div class="card-header bg-primary">
+            <h1>Tamagosaurus</h1>
+            <h2>Quel oeuf choisirez-vous ?</h2>
+        </div>
 
-    <div class="about">
-        <h3>Un oeuf, un tamagosaure !</h3>
-        <p>
-            Parmi l'un de ces oeufs se trouve votre bébé Tamagosaure.
-            Cliquez sur l'un d'entre eux pour choisir votre premier Tamagosaure !
-        </p>
-    </div>
+        <div class="card-body">
+            <h3>Un oeuf, un tamagosaure !</h3>
+            <p>
+                Parmi l'un de ces oeufs se trouve votre bébé Tamagosaure.
+                Cliquez sur l'un d'entre eux pour choisir votre premier Tamagosaure !
+            </p>
 
-    <div class="eggs">
-        {% for i in 0..2 %}
-            <a role="button" href="{{ path('app_birth') }}" class="btn btn-primary rounded-circle border border-secondary">
-                <img src ="{{ asset('/build/images/dinoegg.png') }}">
-            </a>
-        {% endfor %}
+            <div class="col-md-12 text-center">
+            {% for i in 1..3 %}
+                <a href="{{ path('app_tamagosaurus_new') }}" class="d-inline-block col-md-3">
+                    <img class="img-fluid d-inline border border-secondary" src ="{{ asset('/build/images/eggs/dinoegg' ~ i ~ '.png') }}">
+                </a>
+            {% endfor %}
+            </div>
 
+        </div>
     </div>
 
     

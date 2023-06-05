@@ -5,48 +5,28 @@
 {% block body %}
 
 <main>
-    <div class="title">
-        <h1>Tamagosaurus</h1>
-        <h2>Votre propre dinosaure, et de nombreuses activités</h2>
-    </div>
+    <div class="card col-md-8 mx-auto">
+        <div class="card-header bg-primary">
+            <h1>Tamagosaurus</h1>
+            <h2>Votre propre dinosaure, et de nombreuses activités</h2>
+        </div>
 
-    <div class="about">
-        {# A n'afficher que si le visiteur n'est pas connecté #}
-        <h3>Partez à la découverte des Tamagosaures</h3>
-        <p>
-            Avec Tamagosaurus, vous pourrez vous occuper de votre propre Tamagosaure, lui donner à manger,
-            le promener, découvrir des anecdotes sur son espèces, etc... Alors n'hésitez plus et inscrivez-vous !
-        </p>
-        <p>
-            {# Lien uniquement si l'utilisateur n'a pas encore de tamagosaurus et EST CONNECTE #}
-            <a class="btn btn-primary" href="{{ path('app_egg') }}">Ouvre un oeuf !</a>
-        </p>
-    </div>
-
-    <div class="users">
-        <button id="login" class="btn btn-primary" onClick="openLogin()">Se connecter</button>
-        <button id="register" class="btn btn-secondary" onClick="openRegister()">S'inscrire</button>
-    </div>
-
-    <div id="loginForm" class="formHidden">
-        <p>
-            {{ render(controller(
-                'App\\Controller\\LoginController::loginForm'
-            )) }}
-        <p>
-        <button id="cancelLogin" onClick="closeLogin()">X</button>
-    </div>
-
-    <div id="registerForm" class="formHidden">
-        {# TODO: Registration #}
-        <p>Formulaire d'inscription<p>
-
-        <p>
-            {{ render(controller(
-                'App\\Controller\\RegistrationController::register'
-            )) }}
-        </p>
-        <button id="cancelRegister" onClick="closeRegister()">X</button>
+        <div class="card-body">
+            {# A n'afficher que si le visiteur n'est pas connecté #}
+            <h3>Partez à la découverte des Tamagosaures</h3>
+            <p>
+                Avec Tamagosaurus, vous pourrez vous occuper de votre propre Tamagosaure, lui donner à manger,
+                le promener, découvrir des anecdotes sur son espèces, etc... Alors n'hésitez plus et inscrivez-vous !
+            </p>
+            <p>
+                {% if is_granted('ROLE_USER') %}
+                    <a class="btn btn-primary" href="{{ path('app_egg') }}">Ouvre un oeuf !</a>
+                {% else %}
+                    <a role="button" href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
+                    <a role="button" href="{{ path('app_register') }}" class="btn btn-secondary">S'inscrire</a>
+                {% endif %}
+            </p>
+        </div>
     </div>
 
 

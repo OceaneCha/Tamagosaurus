@@ -28,6 +28,11 @@ Encore
     to: "js/[path][name].[ext]",
   })
 
+  // .copyFiles({
+  //   from: "./assets/textures",
+  //   to: "textures/[path][name].[ext]",
+  // })
+
   // public path used by the web server to access the output path
   .setPublicPath("/build")
   // only needed for CDN's or subdirectory deploy

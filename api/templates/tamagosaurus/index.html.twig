@@ -1,37 +1,75 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tamagosaurus index{% endblock %}
+{% block title %}Mon Tamagosaure{% endblock %}
+
+{# /*block de stylesheets */ #}
+
+{# /*block de stylesheets */ #}
+{% block stylesheets %}
+        {{ parent() }}
+        <style>
+            body {
+                background-image: url({{ asset("build/images/backgrounds/background-blue-one.png") }});
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center center;
+
+                /*autres priority de l'image de fond*/
+                }
+        </style>
+{% endblock %}
 
 {% block body %}
-    <h1>Tamagosaurus index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Hunger</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tamagosauru in tamagosauruses %}
-            <tr>
-                <td>{{ tamagosauru.id }}</td>
-                <td>{{ tamagosauru.hunger }}</td>
-                <td>{{ tamagosauru.name }}</td>
-                <td>
-                    <a href="{{ path('app_tamagosaurus_show', {'id': tamagosauru.id}) }}">show</a>
-                    <a href="{{ path('app_tamagosaurus_edit', {'id': tamagosauru.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div>
+        <h1 class="display-2 text-success h1 text-center font-poppins">Mon premier Tamagosaurus</h1>
+        <div
+            id="tamagosaurus"
+            class="text-primary display-1 text-center font-weight-bold"
+            data-tamagosaurus-id="{{tamagosauru.id}}"
+        >
+            {{ tamagosauru.name }}
+        </div>
 
-    <a href="{{ path('app_tamagosaurus_new') }}">Create new</a>
+        <div class="bg-white p-4 custom-padding neon-effect pt-5">
+            <img class="rounded mx-auto d-block" style="width: 30%;" src="{{ asset('build/images/dinosaures/diplosaure-aquaticus.png') }}" alt="Un mignon Tamagosaurus !"><br>
+        </div>        
+
+        <p class="text-success pt-5">Faim : <span id="dino-hunger"></span></p>
+        <h2 class="text-success h2">Donnez lui à manger<h2>
+        <p class="lead text-success">Nourrissez le chaque jour, vous disposez diverses aliments.</p>
+
+        <div id="options-submenu" class="element-visible text-center mb-2"> <!-- JS replaces visible with hidden, but there's no visible -->
+            <button class="btn btn-primary btn-lg element-hidden">Fake</button>
+        </div>
+
+        <div id="options-hunger" class="text-center d-none mb-2"> {# Display/hide feed buttons #}
+            {% include 'layout/buttons/_hunger-options.html.twig' %}
+        </div>
+
+        <div id="options-clothes" class="text-center d-none mb-2">
+            <button class="btn btn-primary btn-lg rounded-pill">test</button>
+        </div>
+
+        <div id="options-locations" class="text-center d-none mb-2">
+            {% for location in destinations %}
+            <a
+                role="button"
+                href="{{ path('app_stroll_go', { destination: location.id }) }}"
+                class="btn btn-primary btn-lg text-uppercase text-white rounded-pill"
+            >
+                {{ location.name }}
+            </a>
+            {% endfor %}        
+        </div>
+
+        {% include 'layout/buttons/_main-options.html.twig' %}
+        
+        {# <div id="dino-render" style="width: 60%;">
+        </div> #}
+    </div>
+
+<script src="/build/js/api/request.js"></script>
+<script src="/build/js/tamagosaurus.js"></script>
+
 {% endblock %}
