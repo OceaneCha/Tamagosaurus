@@ -32,6 +32,9 @@ class Tamagosaurus
     #[ORM\ManyToOne(inversedBy: 'tamagosauruses')]
     private ?User $owner = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
 
 
     public function __construct()
@@ -99,6 +102,18 @@ class Tamagosaurus
     public function setOwner(?User $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

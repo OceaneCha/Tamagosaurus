@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Tamagosaurus;
+use App\Entity\Egg;
 use App\Form\TamagosaurusType;
 use App\Repository\DestinationRepository;
 use App\Repository\TamagosaurusRepository;
@@ -38,12 +39,17 @@ class TamagosaurusController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request, TamagosaurusRepository $tamagosaurusRepository): Response
+    #[Route('/new/{id}', name: 'new', methods: ['GET', 'POST'])]
+    public function new(Egg $egg, Request $request, TamagosaurusRepository $tamagosaurusRepository): Response
     {
         $tamagosaurus = new Tamagosaurus();
         $form = $this->createForm(TamagosaurusType::class, $tamagosaurus);
         $form->handleRequest($request);
+        
+        $environment = $egg->getEnvironment();
+        $allSpecies = $environment->getSpecies()->toArray();
+
+        $species = $allSpecies[array_rand($allSpecies)];
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Avant de sauvegarder le tamagosaurus, inject its type
@@ -51,6 +57,8 @@ class TamagosaurusController extends AbstractController
             //
             // $tamagosauru->setType($type);
             $tamagosaurus->setOwner($this->getUser());
+            $tamagosaurus->setType($species);
+            $tamagosaurus->setImage($species->getImage());
             //
             // OU
             // Utiliser les méthodes d'API-Platform (POST) plutôt que le formulaire
