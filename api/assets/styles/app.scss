@@ -48,11 +48,16 @@ body {
 }
 
 .element-visible {
-    display: inherit;
+    visibility: visible;
 }
 
 .element-hidden {
-    display: none;
+    visibility: hidden;
+}
+
+.neon-effect {
+    background-color: #fff; /* Couleur de fond */
+    box-shadow: 0 0 10px 5px rgba(255, 105, 180, 0.7); /* Ombre rose diffuse */
 }
 
 

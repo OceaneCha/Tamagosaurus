@@ -1,0 +1,21 @@
+<div class=" d-flex justify-content-center justify-content">
+    <button onClick="toggleOptions('options-hunger', 'options-submenu')" class="btn btn-success rounded-pill p-1 mx-5 neon-effect" title="Nourrir le tamagosaure">
+        <img src={{ asset('build/images/buttons/buttons-eat.png') }} alt="Nourrir le tamagosaurus">
+    </button>
+
+    <button onClick="toggleOptions('options-clothes', 'options-submenu')" class="btn btn-success rounded-pill p-1 mx-5 neon-effect">
+        <img src={{ asset('build/images/buttons/buttons-checkroom.png') }}>
+    </button>
+
+    <button onClick="toggleOptions('options-locations', 'options-submenu')" class="btn btn-success rounded-pill p-1 mx-5 neon-effect">
+        <img src={{ asset('build/images/buttons/buttons-map.png') }}>
+    </button>
+</div>
+{# 
+<div>
+    {% for button in buttons %}
+    <button onClick="toggleOptions('{{button.toggleClass}}')" class="btn btn-success rounded-pill p-1 mx-5 neon-effect">
+        <img src={{ asset( {{button.image}}) }}>
+    </button>
+    {% endfor %}
+</div> #}

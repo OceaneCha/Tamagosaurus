@@ -81,32 +81,28 @@ async function resetFood() {
   updateHunger();
 }
 
-// this function allows to show/hide a hidden element, and hide
-// other visible elements that use the same visibility class
-// elementId: enter the ID of the element you want to hide/show
-function toggleOptions(elementId) {
-  let classes = document.getElementById(elementId).classList;
+let lastToggle = null;
 
-  // define the classes used for hidden and visible elements
-  //   they should only be used for related elements, where only one is shown,
-  //   and the others are hidden again
+function toggleOptions(elementId, targetElementId) {
+  let element = document.getElementById(elementId);
+  let elementContent = element.innerHTML;
+  let targetElement = document.getElementById(targetElementId);
   let hidden = "element-hidden";
   let visible = "element-visible";
 
-  // if the element has visible, it becomes hidden
-  // if the element has hidden, it becomes visible, and all other elements
-  //   with visible become hidden
-  if (classes.contains(visible)) {
-    classes.replace(visible, hidden);
-  } else if (classes.contains(hidden)) {
-    let othersVisible = document.getElementsByClassName(visible);
-
-    for (element of othersVisible) {
-      element.classList.replace(visible, hidden);
+  if (lastToggle !== null && lastToggle === element) {
+    if (targetElement.classList.contains(hidden)) {
+      targetElement.classList.replace(hidden, visible);
+    } else {
+      targetElement.classList.replace(visible, hidden);
     }
-
-    classes.replace(hidden, visible);
+  } else {
+    targetElement.classList.replace(hidden, visible);
   }
+
+  lastToggle = element;
+
+  targetElement.innerHTML = elementContent;
 }
 
 
