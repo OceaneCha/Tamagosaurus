@@ -39,7 +39,7 @@ class DefaultController extends AbstractController
         $saurus = new Tamagosaurus();
         $saurus->setName("Diplosaure Aquaticus");
         return $this->render('default/dino.html.twig', [
-            'controller_name' => 'DefaultController', 
+            'controller_name' => 'DefaultController',
             'tamagosauru' => $saurus,
         ]);
     }

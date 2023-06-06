@@ -5,41 +5,6 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 
-localStorage.setItem("steakEnabled", false);
-
-export function loadSteak() {
-  const textureSteakLoader = new MTLLoader();
-  let steak;
-
-  if (localStorage.getItem('steakEnabled') == true) {
-
-    textureSteakLoader.load(
-      textureSteakUrl.href,
-      function (materials) {
-        materials.preload();
-
-        const steakLoader = new OBJLoader();
-        steakLoader.setMaterials(materials);
-        steakLoader.load(
-          steakUrl.href,
-          function (obj) {
-            steak = obj;
-            console.log(obj.animations);
-            scene.add(steak);
-            steak.position.set(2, 0, 7);
-            steak.scale.set(1, 1, 1);
-            console.log('hello');
-          },
-          undefined,
-          function (error) {
-            console.error(error);
-          }
-        );
-      }
-    )
-  }
-}
-
 // TO-DO si l'élément existe exécuter
 const dinoRender = document.querySelector("#dino-render");
 
@@ -63,13 +28,13 @@ if (dinoRender) {
 
   // Initialization
 
-  const renderer = new THREE.WebGLRenderer();
+  const renderer = new THREE.WebGLRenderer({ alpha: true });
 
   renderer.shadowMap.enabled = true;
 
   renderer.setSize(window.innerWidth, window.innerHeight);
 
-
+  renderer.setClearColor(0x000000, 0); // the default
 
   dinoRender.appendChild(renderer.domElement);
 
@@ -94,10 +59,10 @@ if (dinoRender) {
   // scene.add(gridHelper);
 
   //Load background texture
-  const loader = new THREE.TextureLoader();
-  loader.load(backgroundUrl, function (texture) {
-    scene.background = texture;
-  });
+  // const loader = new THREE.TextureLoader();
+  // loader.load(backgroundUrl, function (texture) {
+  //   scene.background = texture;
+  // });
 
   // Objects
 
@@ -209,7 +174,7 @@ if (dinoRender) {
   const animationClips = [];
   assetLoader.load(
     dinoUrl.href,
-    function (gltf) {
+    (gltf) => {
       model = gltf.scene;
       console.log(gltf.animations);
       scene.add(model);
@@ -240,12 +205,6 @@ if (dinoRender) {
       // const animationAction = mixer.clipAction((model).animations[0]);
       // animationActions.push(animationAction);
       // activeAction = animationActions[0];
-      if (localStorage.getItem('steakEnabled') == true) {
-        setInterval(playRandomAnimation, 10000);
-        console.log('random anim');
-      } else {
-        animationSpecified();
-      }
 
     },
     undefined,
@@ -254,6 +213,7 @@ if (dinoRender) {
     }
   );
 
+  setInterval(playRandomAnimation, 10000);
   function playRandomAnimation() {
     const randomIndex = Math.floor(Math.random() * animationClips.length);
     const clip = animationClips[randomIndex];
@@ -279,9 +239,6 @@ if (dinoRender) {
   //
 
 
-  // Steak
-
-  
 
 
   //Burger
@@ -410,21 +367,72 @@ if (dinoRender) {
   let step = 0;
   let speed = 0.03;
   const clock = new THREE.Clock();
+  // Steak
 
+  let steak; // Declare steak variable outside the function
+
+  function addSteak() {
+    if (!steak) { // Check if steak is already added to the scene
+      const textureSteakLoader = new MTLLoader();
+      textureSteakLoader.load(
+        textureSteakUrl.href,
+        function steakyLoad(materials) {
+          materials.preload();
+
+          const steakLoader = new OBJLoader();
+          steakLoader.setMaterials(materials);
+          steakLoader.load(
+            steakUrl.href,
+            function steaky(obj) {
+              steak = obj; // Assign the loaded object to the steak variable
+              steak.position.set(2, 0, 5);
+              steak.scale.set(1, 1, 1);
+              scene.add(steak); // Add the steak object to the scene
+            },
+            undefined,
+            function (error) {
+              console.error(error);
+            }
+          );
+        }
+      );
+    }
+  }
+
+
+  function removeEnabled(steakEnabled) {
+    if (steak) {
+
+      localStorage.setItem("steakEnabled", steakEnabled);
+    }
+  }
+
+  function removeSteak() {
+    scene.remove(steak);
+  }
 
   function animate() {
     if (mixer) {
       mixer.update(clock.getDelta());
+      if (localStorage.getItem('steakEnabled') == "true") {
+        addSteak();
+        setTimeout(function () {
+          removeEnabled(false);
+        }, 5000);
+        animationSpecified();
+        // console.log(steak);
+        // console.log(steak.position.x);
+        // step += speed;
+        // steak.position.y = 10 * Math.abs(Math.sin(step));
+        // steak.position.x = 15 * Math.abs(Math.sin(step));
+
+      } if (localStorage.getItem('steakEnabled') == "false") {
+        removeSteak();
+      }
+
     }
 
-    if (localStorage.getItem('steakEnabled') == true) {
-      console.log(steakEnabled);
-      console.log(steak);
-      console.log(steak.position.x);
-      step += speed;
-      steak.position.y = 10 * Math.abs(Math.sin(step));
-      steak.position.x = 15 * Math.abs(Math.sin(step));
-    }
+
     // if (steak) {
     //   while (steak.position > (2,0,7)) {
     //     // Update position based on velocity and time
