@@ -28,13 +28,13 @@ if (dinoRender) {
 
   // Initialization
 
-  const renderer = new THREE.WebGLRenderer();
+  const renderer = new THREE.WebGLRenderer({ alpha: true });
 
   renderer.shadowMap.enabled = true;
 
   renderer.setSize(window.innerWidth, window.innerHeight);
 
-
+  renderer.setClearColor(0x000000, 0); // the default
 
   dinoRender.appendChild(renderer.domElement);
 
@@ -59,10 +59,10 @@ if (dinoRender) {
   // scene.add(gridHelper);
 
   //Load background texture
-  const loader = new THREE.TextureLoader();
-  loader.load(backgroundUrl, function (texture) {
-    scene.background = texture;
-  });
+  // const loader = new THREE.TextureLoader();
+  // loader.load(backgroundUrl, function (texture) {
+  //   scene.background = texture;
+  // });
 
   // Objects
 
@@ -409,7 +409,6 @@ if (dinoRender) {
 
   function removeSteak() {
     scene.remove(steak);
-    steak = null;
   }
 
   function animate() {
