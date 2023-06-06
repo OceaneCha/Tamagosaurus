@@ -369,42 +369,47 @@ if (dinoRender) {
   const clock = new THREE.Clock();
   // Steak
 
-  const textureSteakLoader = new MTLLoader();
+  let steak; // Declare steak variable outside the function
 
-  textureSteakLoader.load(
-    textureSteakUrl.href,
-    function steakyLoad(materials) {
-      materials.preload();
+  function addSteak() {
+    if (!steak) { // Check if steak is already added to the scene
+      const textureSteakLoader = new MTLLoader();
+      textureSteakLoader.load(
+        textureSteakUrl.href,
+        function steakyLoad(materials) {
+          materials.preload();
 
-      const steakLoader = new OBJLoader();
-      steakLoader.setMaterials(materials);
-      steakLoader.load(
-        steakUrl.href,
-        function steaky(obj) {
-          let steak = obj;
-          steak.position.set(2, 0, 5);
-          steak.scale.set(1, 1, 1);
-          return { steak };
-        },
-        undefined,
-        function (error) {
-          console.error(error);
-        },
-        function addSteak(steak) {
-          scene.add(steak);
+          const steakLoader = new OBJLoader();
+          steakLoader.setMaterials(materials);
+          steakLoader.load(
+            steakUrl.href,
+            function steaky(obj) {
+              steak = obj; // Assign the loaded object to the steak variable
+              steak.position.set(2, 0, 5);
+              steak.scale.set(1, 1, 1);
+              scene.add(steak); // Add the steak object to the scene
+            },
+            undefined,
+            function (error) {
+              console.error(error);
+            }
+          );
         }
       );
     }
-  )
+  }
+
+
+  function removeEnabled(steakEnabled) {
+    if (steak) {
+
+      localStorage.setItem("steakEnabled", steakEnabled);
+    }
+  }
 
   function removeSteak() {
-    setTimeout(
-      function () {
-        scene.remove(steak);
-        localStorage.setItem("steakEnabled", false);
-      }, 10000
-    )
-
+    scene.remove(steak);
+    steak = null;
   }
 
   function animate() {
@@ -412,7 +417,9 @@ if (dinoRender) {
       mixer.update(clock.getDelta());
       if (localStorage.getItem('steakEnabled') == "true") {
         addSteak();
-        removeSteak();
+        setTimeout(function () {
+          removeEnabled(false);
+        }, 5000);
         animationSpecified();
         // console.log(steak);
         // console.log(steak.position.x);
@@ -420,6 +427,8 @@ if (dinoRender) {
         // steak.position.y = 10 * Math.abs(Math.sin(step));
         // steak.position.x = 15 * Math.abs(Math.sin(step));
 
+      } if (localStorage.getItem('steakEnabled') == "false") {
+        removeSteak();
       }
 
     }
