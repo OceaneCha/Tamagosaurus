@@ -3,19 +3,34 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Controller\FeedingAction;
 use App\Controller\GoingOutAction;
+use App\Controller\StatusAction;
 use App\Repository\TamagosaurusRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TamagosaurusRepository::class)]
+#[ORM\HasLifecycleCallbacks()]
 #[ApiResource(
     mercure: true,
     operations: [
         new Get(),
+        new Get(
+            controller: StatusAction::class,
+            uriTemplate: "/tamagosauruses/{id}/status",
+        ),
+        new GetCollection(),
+        new Post(),
+        new Put(),
+        new Patch(),
+        new Delete,
         new Patch(
             controller: FeedingAction::class,
             uriTemplate: "/tamagosauruses/{id}/feed"
@@ -58,10 +73,19 @@ class Tamagosaurus
     #[ORM\Column(nullable: true)]
     private ?bool $isAlive = null;
 
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
+    private ?\DateTimeImmutable $createdAt = null;
+
 
 
     public function __construct()
     {
+    }
+
+    #[ORM\PrePersist]
+    public function onCreate(): void
+    {
+        $this->setCreatedAt(new \DateTimeImmutable());
     }
 
     public function getId(): ?int
@@ -161,6 +185,18 @@ class Tamagosaurus
     public function setIsAlive(?bool $isAlive): self
     {
         $this->isAlive = $isAlive;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

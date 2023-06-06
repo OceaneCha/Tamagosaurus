@@ -51,7 +51,7 @@ class SpeciesFixtures extends Fixture implements DependentFixtureInterface
             $environment = $this->getReference('environment_' . $species['environment']);
             $newSpecies->setEnvironment($environment);
             $newSpecies->setImage('build/images/dinosaures/' . strtolower($species['name']) . '.png');
-            $seconds = new \DateInterval('PT360S');
+            $seconds = new \DateInterval('PT' . $species['foodInterval'] . 'S');
             $newSpecies->setFoodInterval($seconds);
 
             $manager->persist($newSpecies);
