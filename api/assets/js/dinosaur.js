@@ -239,13 +239,6 @@ if (dinoRender) {
   //
 
 
-  // Steak
-
-
-  const textureSteakLoader = new MTLLoader();
-  let steak;
-
-
 
 
   //Burger
@@ -374,48 +367,64 @@ if (dinoRender) {
   let step = 0;
   let speed = 0.03;
   const clock = new THREE.Clock();
+  // Steak
 
+  const textureSteakLoader = new MTLLoader();
+
+  textureSteakLoader.load(
+    textureSteakUrl.href,
+    function steakyLoad(materials) {
+      materials.preload();
+
+      const steakLoader = new OBJLoader();
+      steakLoader.setMaterials(materials);
+      steakLoader.load(
+        steakUrl.href,
+        function steaky(obj) {
+          let steak = obj;
+          steak.position.set(2, 0, 5);
+          steak.scale.set(1, 1, 1);
+          return { steak };
+        },
+        undefined,
+        function (error) {
+          console.error(error);
+        },
+        function addSteak(steak) {
+          scene.add(steak);
+        }
+      );
+    }
+  )
+
+  function removeSteak() {
+    setTimeout(
+      function () {
+        scene.remove(steak);
+        localStorage.setItem("steakEnabled", false);
+      }, 10000
+    )
+
+  }
 
   function animate() {
     if (mixer) {
       mixer.update(clock.getDelta());
+      if (localStorage.getItem('steakEnabled') == "true") {
+        addSteak();
+        removeSteak();
+        animationSpecified();
+        // console.log(steak);
+        // console.log(steak.position.x);
+        // step += speed;
+        // steak.position.y = 10 * Math.abs(Math.sin(step));
+        // steak.position.x = 15 * Math.abs(Math.sin(step));
+
+      }
+
     }
-    
-    if (localStorage.getItem('steakEnabled') == "true") {
-
-      textureSteakLoader.load(
-        textureSteakUrl.href,
-        function (materials) {
-          materials.preload();
-
-          const steakLoader = new OBJLoader();
-          steakLoader.setMaterials(materials);
-          steakLoader.load(
-            steakUrl.href,
-            function (obj) {
-              steak = obj;
-              console.log(obj.animations);
-              scene.add(steak);
-              steak.position.set(2, 0, 7);
-              steak.scale.set(1, 1, 1);
-              console.log('hello');
-            },
-            undefined,
-            function (error) {
-              console.error(error);
-            }
-          );
-        }
-      )
 
 
-      animationSpecified();
-      console.log(steak);
-      console.log(steak.position.x);
-      step += speed;
-      steak.position.y = 10 * Math.abs(Math.sin(step));
-      steak.position.x = 15 * Math.abs(Math.sin(step));
-    }
     // if (steak) {
     //   while (steak.position > (2,0,7)) {
     //     // Update position based on velocity and time
