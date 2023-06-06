@@ -21,6 +21,8 @@
 {% block body %}
 <p>Bienvenue {{destination.description}} !</p>
 
+{% include 'tamagosaurus/_dino.html.twig' %}
+
 <p>
         <a role="button" class="btn btn-primary" href="{{ path('app_tamagosaurus_index') }}">
                 <img src="{{ asset('build/images/icons/home/home-icon-white.png') }}"><br>

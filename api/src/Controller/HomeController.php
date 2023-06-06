@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\EggRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,9 +21,11 @@ class HomeController extends AbstractController
 
     #[Route('/egg', name: 'egg')]
     #[IsGranted('ROLE_USER')]
-    public function eggChoice(): Response
+    public function eggChoice(EggRepository $eggRepository): Response
     {
-        return $this->render('home/eggChoice.html.twig');
+        return $this->render('home/eggChoice.html.twig', [
+            'eggs' => $eggRepository->findAll(),
+        ]);
     }
 
     #[Route('/birth', name: 'birth')]

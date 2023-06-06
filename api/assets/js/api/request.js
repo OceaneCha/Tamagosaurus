@@ -12,7 +12,11 @@ const putRequest = async (resource, json) => {
 };
 
 const getRequest = async (resource) => {
-  const response = await fetch(`https://localhost${resource}`);
+  try {
+    const response = await fetch(`https://localhost${resource}`);
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
 
-  return await response.json();
 };

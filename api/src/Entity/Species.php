@@ -20,16 +20,25 @@ class Species
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'species', targetEntity: Environment::class)]
-    private Collection $environment;
-
     #[ORM\OneToMany(mappedBy: 'type', targetEntity: Tamagosaurus::class)]
     private Collection $tamagosauruses;
 
+    #[ORM\ManyToOne(inversedBy: 'species')]
+    private ?Environment $environment = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateInterval $foodInterval = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateInterval $strollInterval = null;
+
     public function __construct()
     {
-        $this->environment = new ArrayCollection();
         $this->tamagosauruses = new ArrayCollection();
+        $this->setFoodInterval(\DateInterval::createFromDateString('30 seconds'));
     }
 
     public function getId(): ?int
@@ -45,36 +54,6 @@ class Species
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Environment>
-     */
-    public function getEnvironment(): Collection
-    {
-        return $this->environment;
-    }
-
-    public function addEnvironment(Environment $environment): self
-    {
-        if (!$this->environment->contains($environment)) {
-            $this->environment->add($environment);
-            $environment->setSpecies($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEnvironment(Environment $environment): self
-    {
-        if ($this->environment->removeElement($environment)) {
-            // set the owning side to null (unless already changed)
-            if ($environment->getSpecies() === $this) {
-                $environment->setSpecies(null);
-            }
-        }
 
         return $this;
     }
@@ -105,6 +84,54 @@ class Species
                 $tamagosaurus->setType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEnvironment(): ?Environment
+    {
+        return $this->environment;
+    }
+
+    public function setEnvironment(?Environment $environment): self
+    {
+        $this->environment = $environment;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getFoodInterval(): ?\DateInterval
+    {
+        return $this->foodInterval;
+    }
+
+    public function setFoodInterval(?\DateInterval $foodInterval): self
+    {
+        $this->foodInterval = $foodInterval;
+
+        return $this;
+    }
+
+    public function getStrollInterval(): ?\DateInterval
+    {
+        return $this->strollInterval;
+    }
+
+    public function setStrollInterval(?\DateInterval $strollInterval): self
+    {
+        $this->strollInterval = $strollInterval;
 
         return $this;
     }

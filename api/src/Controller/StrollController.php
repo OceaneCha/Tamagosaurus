@@ -22,7 +22,12 @@ class StrollController extends AbstractController
     #[Route('/{destination}', name: 'go')]
     public function goTo(Destination $destination, DestinationRepository $destinationRepository): Response
     {
+        $user = $this->getUser();
+        $sauruses = $user->getTamagosauruses();
+        $saurus = $sauruses->first();
+
         return $this->render('stroll/show.html.twig', [
+            'tamagosauru' => $saurus,
             'destination' => $destination,
         ]);
     }

@@ -23,6 +23,7 @@ class TamagosaurusFixtures extends Fixture implements DependentFixtureInterface
         // $saurus->setType($type);
         $saurus->setName('John');
         $saurus->setOwner($this->getReference('admin_user'));
+        $saurus->setImage('/build/images/dinosaures/ichtyosaurus.png');
         $manager->persist($saurus);
         // $this->addReference('Tamagosaurus_' , $saurus);
 
