@@ -1,38 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tamagosaurus{% endblock %}
+{% block title %}Tamagosaurus
+{% endblock %}
 
 {% block body %}
 
-<main>
-    <div class="card col-md-8 mx-auto">
-        <div class="card-header bg-primary">
-            <h1>Tamagosaurus</h1>
-            <h2>Votre propre dinosaure, et de nombreuses activités</h2>
-        </div>
+	<main>
+		{{ parent()}}
+		<style>
+			body {
+				background-image: url({{ asset("build/images/backgrounds/background-blue-one.png") }});
+			}
+		</style>
+		<div class="card col-md-8 mx-auto">
+			<div class="card-header bg-primary">
+				<h1>Tamagosaurus</h1>
+				<h2>Votre propre dinosaure, et de nombreuses activités</h2>
+			</div>
 
-        <div class="card-body">
-            {# A n'afficher que si le visiteur n'est pas connecté #}
-            <h3>Partez à la découverte des Tamagosaures</h3>
-            <p>
-                Avec Tamagosaurus, vous pourrez vous occuper de votre propre Tamagosaure, lui donner à manger,
-                le promener, découvrir des anecdotes sur son espèces, etc... Alors n'hésitez plus et inscrivez-vous !
-            </p>
-            <p>
-                {% if is_granted('ROLE_USER') %}
-                    <a class="btn btn-primary" href="{{ path('app_egg') }}">Ouvre un oeuf !</a>
-                {% else %}
-                    <a role="button" href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
-                    <a role="button" href="{{ path('app_register') }}" class="btn btn-secondary">S'inscrire</a>
-                {% endif %}
-            </p>
-        </div>
-    </div>
+			<div
+				class="card-body">
+				{# A n'afficher que si le visiteur n'est pas connecté #}
+				<h3>Partez à la découverte des Tamagosaures</h3>
+				<p>
+					Avec Tamagosaurus, vous pourrez vous occuper de votre propre Tamagosaure, lui donner à manger,
+																																																																	                le promener, découvrir des anecdotes sur son espèces, etc... Alors n'hésitez plus et inscrivez-vous !
+				</p>
+				<p>
+					{% if is_granted('ROLE_USER') %}
+						<a class="btn btn-primary" href="{{ path('app_egg') }}">Ouvre un oeuf !</a>
+					{% else %}
+						<a role="button" href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
+						<a role="button" href="{{ path('app_register') }}" class="btn btn-secondary">S'inscrire</a>
+					{% endif %}
+				</p>
+			</div>
+		</div>
 
 
-    <script src="/build/js/api/request.js"></script>
-    <script src="/build/js/home.js"></script>
-    <script src="/build/js/tamagosaurus.js"></script>
-</main>
+		<script src="/build/js/api/request.js"></script>
+		<script src="/build/js/home.js"></script>
+		<script src="/build/js/tamagosaurus.js"></script>
+	</main>
 
 {% endblock %}
