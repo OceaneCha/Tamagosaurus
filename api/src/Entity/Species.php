@@ -29,9 +29,16 @@ class Species
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateInterval $foodInterval = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateInterval $strollInterval = null;
+
     public function __construct()
     {
         $this->tamagosauruses = new ArrayCollection();
+        $this->setFoodInterval(\DateInterval::createFromDateString('30 seconds'));
     }
 
     public function getId(): ?int
@@ -101,6 +108,30 @@ class Species
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getFoodInterval(): ?\DateInterval
+    {
+        return $this->foodInterval;
+    }
+
+    public function setFoodInterval(?\DateInterval $foodInterval): self
+    {
+        $this->foodInterval = $foodInterval;
+
+        return $this;
+    }
+
+    public function getStrollInterval(): ?\DateInterval
+    {
+        return $this->strollInterval;
+    }
+
+    public function setStrollInterval(?\DateInterval $strollInterval): self
+    {
+        $this->strollInterval = $strollInterval;
 
         return $this;
     }

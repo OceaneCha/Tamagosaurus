@@ -12,30 +12,26 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/app/tamagosaurus', name: 'app_tamagosaurus_')]
 class TamagosaurusController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function index(TamagosaurusRepository $tamagosaurusRepository, DestinationRepository $destinationRepository): Response
-    {
-        $destinations = $destinationRepository->findAll();
+    {        
+        if (!$this->getUser()->getTamagosauruses()->count()) {
+            return $this->redirectToRoute('app_egg');
+        }
 
-        if (
-            $this->isGranted('ROLE_USER')
-        ) {
-            $user = $this->getUser();
-            $sauruses = $user->getTamagosauruses();
-            $saurus = $sauruses->first(); //TODO: Create currentTamagosaurus property in Entity/User
-        } else {
-            $saurus = new Tamagosaurus;
-            $saurus->setName("Diplosaure Aquaticus");
-        }        
+        $first = $this->getUser()->getTamagosauruses()->getValues()[0]; // TODO: Remove this
+        dump($first->getType());
         
         return $this->render('tamagosaurus/index.html.twig', [
-            'tamagosauruses' => $tamagosaurusRepository->findAll(),
-            'tamagosauru' => $saurus,
-            'destinations' => $destinations,
+            'tamagosauru' => $this->getUser()->getTamagosauruses()->first(),
+            'destinations' => $destinationRepository->findAll(),
+            'first' => $first, // TODO: Remove this
         ]);
     }
 

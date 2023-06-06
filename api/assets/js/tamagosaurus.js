@@ -66,8 +66,10 @@ async function feed(quantity) {
   let hunger = quantity + saurus.hunger;
   let json = { hunger };
 
-  saurus = await putRequest(saurus["@id"], json);
-  updateHunger(saurus.hunger);
+  saurus = await putRequest(`${saurus["@id"]}/feed`, json);
+  if (saurus) {
+    updateHunger(saurus.hunger);
+  }
 
   localStorage.setItem("steakEnabled", true);
   loadSteak();

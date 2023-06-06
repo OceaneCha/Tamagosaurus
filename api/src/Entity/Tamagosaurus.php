@@ -3,12 +3,29 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
+use App\Controller\FeedingAction;
+use App\Controller\GoingOutAction;
 use App\Repository\TamagosaurusRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TamagosaurusRepository::class)]
-#[ApiResource(mercure: true)]
+#[ApiResource(
+    mercure: true,
+    operations: [
+        new Get(),
+        new Patch(
+            controller: FeedingAction::class,
+            uriTemplate: "/tamagosauruses/{id}/feed"
+        ),
+        new Patch(
+            controller: GoingOutAction::class,
+            uriTemplate: "/tamagosauruses/{id}/goingout"
+        )
+    ]
+)]
 class Tamagosaurus
 {
     #[ORM\Id]
@@ -34,6 +51,12 @@ class Tamagosaurus
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $lastWentOut = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isAlive = null;
 
 
 
@@ -114,6 +137,30 @@ class Tamagosaurus
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getLastWentOut(): ?\DateTimeInterface
+    {
+        return $this->lastWentOut;
+    }
+
+    public function setLastWentOut(?\DateTimeInterface $lastWentOut): self
+    {
+        $this->lastWentOut = $lastWentOut;
+
+        return $this;
+    }
+
+    public function isIsAlive(): ?bool
+    {
+        return $this->isAlive;
+    }
+
+    public function setIsAlive(?bool $isAlive): self
+    {
+        $this->isAlive = $isAlive;
 
         return $this;
     }
