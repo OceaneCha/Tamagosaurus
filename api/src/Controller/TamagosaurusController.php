@@ -24,14 +24,10 @@ class TamagosaurusController extends AbstractController
         if (!$this->getUser()->getTamagosauruses()->count()) {
             return $this->redirectToRoute('app_egg');
         }
-
-        $first = $this->getUser()->getTamagosauruses()->getValues()[0]; // TODO: Remove this
-        dump($first->getType());
         
         return $this->render('tamagosaurus/index.html.twig', [
             'tamagosauru' => $this->getUser()->getTamagosauruses()->first(),
             'destinations' => $destinationRepository->findAll(),
-            'first' => $first, // TODO: Remove this
         ]);
     }
 
@@ -48,16 +44,11 @@ class TamagosaurusController extends AbstractController
         $species = $allSpecies[array_rand($allSpecies)];
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Avant de sauvegarder le tamagosaurus, inject its type
-            // En fonction de l'oeuf sélectionné par l'utilisateur
-            //
-            // $tamagosauru->setType($type);
+            
             $tamagosaurus->setOwner($this->getUser());
             $tamagosaurus->setType($species);
             $tamagosaurus->setImage($species->getImage());
-            //
-            // OU
-            // Utiliser les méthodes d'API-Platform (POST) plutôt que le formulaire
+
             $tamagosaurusRepository->save($tamagosaurus, true);
 
             $this->addFlash('success', 'The tamagosaurus has been named!');
