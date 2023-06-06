@@ -1,6 +1,11 @@
 let saurus;
 let tamagosaurusId;
 
+
+localStorage.setItem("steakEnabled", false);
+
+// On load, we update the saurus's hunger
+// 'true' forces a fetch request
 window.onload = function () {
   var tamagosaurus = document.querySelector('#tamagosaurus');
   tamagosaurusId = tamagosaurus.dataset.tamagosaurusId;
@@ -8,7 +13,7 @@ window.onload = function () {
 };
 
 let interval = 45000; // TODO: Set the interval based on the saurus's species
-setInterval(function() {
+setInterval(function () {
   if (saurus.hunger > 0) {
     updateHunger(0, true);
     console.log(saurus.hunger);
@@ -30,6 +35,7 @@ async function updateHunger(newHunger = 0, force = false) {
 async function feed(quantity) {
   let hunger = quantity + saurus.hunger;
   let json = { hunger };
+  localStorage.setItem("steakEnabled", true);
 
   saurus = await putRequest(`/tamagosauruses/${tamagosaurusId}/feed`, json);
   if (saurus) {
@@ -69,7 +75,7 @@ function toggleOptions(elementId, targetElementId) {
 }
 
 const evtSource = new EventSource(`https://localhost/.well-known/mercure?topic=https://localhost/tamagosauruses/${tamagosaurusId}`);
-evtSource.onmessage = function(event) {
+evtSource.onmessage = function (event) {
   const data = JSON.parse(event.data);
   console.log(data);
 }
