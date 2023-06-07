@@ -10,23 +10,35 @@ use Doctrine\Persistence\ObjectManager;
 class EggFixtures extends Fixture implements DependentFixtureInterface
 {
     public const EGGS = [
-        0 => [
+        [
             'name' => 'Oeuf de la terre',
             'description' => '',
             'image' => 'egg-earth.png',
             'environment' => 'Terre',
         ],
-        1 => [
+        [
             'name' => 'Oeuf de l\'air',
             'description' => '',
             'image' => 'egg-sky.png',
             'environment' => 'Ciel',
         ],
-        2 => [
+        [
             'name' => 'Oeuf de la mer',
             'description' => '',
             'image' => 'egg-water.png',
             'environment' => 'Mer',
+        ],
+        [
+            'name' => 'Oeuf surprenant',
+            'description' => '',
+            'image' => 'dimitrus-egg.png',
+            'environment' => 'Dimitri',
+        ],
+        [
+            'name' => 'Oeuf du futur',
+            'description' => '',
+            'image' => '3d-egg.png',
+            'environment' => '3D',
         ],
     ];
     public function load(ObjectManager $manager): void

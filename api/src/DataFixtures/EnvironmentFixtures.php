@@ -10,14 +10,20 @@ use Doctrine\Persistence\ObjectManager;
 class EnvironmentFixtures extends Fixture
 {
     public const ENVIRONMENTS = [
-        0 => [
+        [
             'name' => 'Terre',
         ],
-        1 => [
+        [
             'name' => 'Mer',
         ],
-        2 => [
+        [
             'name' => 'Ciel',
+        ],
+        [
+            'name' => 'Dimitri',
+        ],
+        [
+            'name' => '3D',
         ]
     ];
     public function load(ObjectManager $manager): void
@@ -25,6 +31,7 @@ class EnvironmentFixtures extends Fixture
         foreach (self::ENVIRONMENTS as $environment) {
             $newEnvironment = new Environment();
             $newEnvironment->setName($environment['name']);
+            $newEnvironment->setImage('build/images/backgrounds/cave.png');
 
             $manager->persist($newEnvironment);
 
