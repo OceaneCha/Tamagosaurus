@@ -31,6 +31,7 @@ class EnvironmentFixtures extends Fixture
         foreach (self::ENVIRONMENTS as $environment) {
             $newEnvironment = new Environment();
             $newEnvironment->setName($environment['name']);
+            $newEnvironment->setImage('build/images/backgrounds/cave.png');
 
             $manager->persist($newEnvironment);
 
