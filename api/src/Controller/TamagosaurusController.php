@@ -6,6 +6,7 @@ use App\Entity\Tamagosaurus;
 use App\Entity\Egg;
 use App\Form\TamagosaurusType;
 use App\Repository\DestinationRepository;
+use App\Repository\SpeciesRepository;
 use App\Repository\TamagosaurusRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -32,8 +33,9 @@ class TamagosaurusController extends AbstractController
     }
 
     #[Route('/new/{id}', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Egg $egg, Request $request, TamagosaurusRepository $tamagosaurusRepository): Response
+    public function new(Egg $egg, Request $request, TamagosaurusRepository $tamagosaurusRepository, SpeciesRepository $speciesRepository): Response
     {
+        $session = $request->getSession();
         $tamagosaurus = new Tamagosaurus();
         $form = $this->createForm(TamagosaurusType::class, $tamagosaurus);
         $form->handleRequest($request);
@@ -41,17 +43,26 @@ class TamagosaurusController extends AbstractController
         $environment = $egg->getEnvironment();
         $allSpecies = $environment->getSpecies()->toArray();
 
-        $species = $allSpecies[array_rand($allSpecies)];
+        if (!$form->isSubmitted()) {
+            $session->remove('newSaurus');
+        }
+
+        if (!$session->get('newSaurus')) {
+            $species = $allSpecies[array_rand($allSpecies)];
+            $session->set('newSaurus', $species->getName());
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             
             $tamagosaurus->setOwner($this->getUser());
+            $species = $speciesRepository->findOneBy(['name' => $session->get('newSaurus')]);
             $tamagosaurus->setType($species);
             $tamagosaurus->setImage($species->getImage());
 
             $tamagosaurusRepository->save($tamagosaurus, true);
 
-            $this->addFlash('success', 'The tamagosaurus has been named!');
+            $this->addFlash('success', 'Welcome among us, ' . $tamagosaurus->getName() . ' !');
+            $session->remove('newSaurus');
 
             return $this->redirectToRoute('app_tamagosaurus_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -59,6 +70,7 @@ class TamagosaurusController extends AbstractController
         return $this->render('tamagosaurus/new.html.twig', [
             'tamagosauru' => $tamagosaurus,
             'form' => $form,
+            'species' => $species,
         ]);
     }
 
