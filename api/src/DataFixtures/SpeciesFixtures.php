@@ -21,9 +21,19 @@ class SpeciesFixtures extends Fixture implements DependentFixtureInterface
             'foodInterval' => '20',
         ],
         [
+            'name' => 'Plesiosorus',
+            'environment' => 'Mer',
+            'foodInterval' => '30',
+        ],
+        [
             'name' => 'Pteranodonus',
             'environment' => 'Ciel',
             'foodInterval' => '60',
+        ],
+        [
+            'name' => 'Archaeopteryxus',
+            'environment' => 'Ciel',
+            'foodInterval' => '30',
         ],
         [
             'name' => 'Quetzalcoatlus',
@@ -39,6 +49,21 @@ class SpeciesFixtures extends Fixture implements DependentFixtureInterface
             'name' => 'Spinosaurus',
             'environment' => 'Terre',
             'foodInterval' => '20',
+        ],
+        [
+            'name' => 'Diplodocus',
+            'environment' => 'Terre',
+            'foodInterval' => '30',
+        ],
+        [
+            'name' => 'Dimitrus',
+            'environment' => 'Dimitri',
+            'foodInterval' => '30',
+        ],
+        [
+            'name' => '3DSaurus',
+            'environment' => '3D',
+            'foodInterval' => '30',
         ],
     ];
 

@@ -20,9 +20,11 @@
 
             <div class="col-md-12 text-center">
             {% for egg in eggs %}
+                {% if (is_granted('ROLE_ADMIN')) or (egg.environment.name != 'Dimitri' and egg.environment.name != '3D') or (app.user.username == 'Dimitri' and egg.environment.name == 'Dimitri') %}
                 <a href="{{ path('app_tamagosaurus_new', { id: egg.id }) }}" class="d-inline-block col-md-3" title="{{ egg.name }}">
                     <img class="img-fluid d-inline" src ="{{ asset( egg.image ) }}">
                 </a>
+                {% endif %}
             {% endfor %}
             </div>
 

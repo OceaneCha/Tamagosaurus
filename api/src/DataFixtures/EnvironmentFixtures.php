@@ -10,14 +10,20 @@ use Doctrine\Persistence\ObjectManager;
 class EnvironmentFixtures extends Fixture
 {
     public const ENVIRONMENTS = [
-        0 => [
+        [
             'name' => 'Terre',
         ],
-        1 => [
+        [
             'name' => 'Mer',
         ],
-        2 => [
+        [
             'name' => 'Ciel',
+        ],
+        [
+            'name' => 'Dimitri',
+        ],
+        [
+            'name' => '3D',
         ]
     ];
     public function load(ObjectManager $manager): void
