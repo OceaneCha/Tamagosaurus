@@ -7,6 +7,7 @@ body {
     background-image: url('../images/backgrounds/background-blue-one.png') no-repeat center center fixed;
     background-size: cover;
     background-repeat: no-repeat;
+    height: 100vh;
     
 
     /*autres priority de l'image de fond*/
@@ -58,6 +59,10 @@ body {
 .neon-effect {
     background-color: #fff; /* Couleur de fond */
     box-shadow: 0 0 10px 5px rgba(255, 105, 180, 0.7); /* Ombre rose diffuse */
+}
+
+input {
+    color: black !important;
 }
 
 

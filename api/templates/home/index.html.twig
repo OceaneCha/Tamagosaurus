@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tamagosaurus
+{% block title %}
+    Accueil — {{ parent() }}
 {% endblock %}
 
 {% block body %}
@@ -13,27 +14,27 @@
 			}
 		</style>
 		<div class="card col-md-8 mx-auto">
-			<div class="card-header bg-primary">
-				<h1>Tamagosaurus</h1>
-				<h2>Votre propre dinosaure, et de nombreuses activités</h2>
+			<div class="card-header bg-primary text-white">
+				<h2>Ton propre dinosaure, et de nombreuses activités</h2>
 			</div>
 
 			<div
 				class="card-body">
 				{# A n'afficher que si le visiteur n'est pas connecté #}
-				<h3>Partez à la découverte des Tamagosaures</h3>
+				<h3>Pars à la découverte des Tamagosaures</h3>
 				<p>
-					Avec Tamagosaurus, vous pourrez vous occuper de votre propre Tamagosaure, lui donner à manger,
-																																																																	                le promener, découvrir des anecdotes sur son espèces, etc... Alors n'hésitez plus et inscrivez-vous !
+					Avec Tamagosaurus, tu pourras t'occuper de ton propre Tamagosaure, lui donner à manger,
+                    le promener, découvrir des anecdotes sur son espèces, etc... Alors n'hésite plus et inscris-toi !
 				</p>
-				<p>
+				<div class="card-footer bg-light text-center">
 					{% if is_granted('ROLE_USER') %}
-						<a class="btn btn-primary" href="{{ path('app_egg') }}">Ouvre un oeuf !</a>
+                        <p>Et maintenant...</p>
+						<a class="btn btn-primary btn-block" href="{{ path('app_egg') }}">Ouvre un oeuf !</a>
 					{% else %}
 						<a role="button" href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
 						<a role="button" href="{{ path('app_register') }}" class="btn btn-secondary">S'inscrire</a>
 					{% endif %}
-				</p>
+				</div>
 			</div>
 		</div>
 
