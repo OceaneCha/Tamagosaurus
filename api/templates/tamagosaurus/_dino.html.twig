@@ -1,9 +1,11 @@
 {% if tamagosauru.type.name == '3DSaurus' %}
 	<div id="dino-render"></div>
 {% else %}
-	<div class="p-4 custom-padding neon-effect pt-5"
 	{% if destination is not defined %}
+	<div class="p-4 custom-padding neon-effect pt-5"
 	style="background-image: url( {{ asset( tamagosauru.type.environment.image ) }})"
+	{% else %}
+	<div class="p-4 custom-padding pt-5"
 	{% endif %}
 	>
 		<img class="rounded mx-auto d-block" style="width: 30%;" src="{{ asset( tamagosauru.image ) }}" alt="Un mignon Tamagosaurus !"><br>

@@ -12,7 +12,7 @@ if (dinoRender) {
   // Models
 
   const dinoUrl = new URL("../source/trex1.glb", import.meta.url);
-  const backgroundUrl = new URL("../images/backgrounds/park.jpg", import.meta.url);
+  const backgroundUrl = new URL("../images/backgrounds/destinations/park.jpg", import.meta.url);
   const pattyUrl = new URL("../source/BurgerPatty_Raw.obj", import.meta.url);
   const texturePattyUrl = new URL("../source/BurgerPatty_Raw.mtl", import.meta.url);
   const burgerUrl = new URL("../source/Burger.obj", import.meta.url);
