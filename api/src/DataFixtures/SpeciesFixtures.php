@@ -37,7 +37,7 @@ class SpeciesFixtures extends Fixture implements DependentFixtureInterface
         ],
         [
             'name' => 'Quetzalcoatlus',
-            'environment' => 'Ciel',
+            'environment' => 'Terre',
             'foodInterval' => '45',
         ],
         [

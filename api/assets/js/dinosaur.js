@@ -32,7 +32,7 @@ if (dinoRender) {
 
   renderer.shadowMap.enabled = true;
 
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(1200, 800);
 
   renderer.setClearColor(0x000000, 0); // the default
 
@@ -50,6 +50,7 @@ if (dinoRender) {
   const orbit = new OrbitControls(camera, renderer.domElement);
   camera.position.set(9, 10, 10);
   orbit.update();
+  
 
   // Helpers
 
@@ -213,7 +214,7 @@ if (dinoRender) {
     }
   );
 
-  setInterval(playRandomAnimation, 10000);
+  
   function playRandomAnimation() {
     const randomIndex = Math.floor(Math.random() * animationClips.length);
     const clip = animationClips[randomIndex];
@@ -399,65 +400,51 @@ if (dinoRender) {
     }
   }
 
+  setInterval(() => {
+    playRandomAnimation();
+  }, 10000);
 
   function removeEnabled(steakEnabled) {
     if (steak) {
 
       localStorage.setItem("steakEnabled", steakEnabled);
+      removeSteak();
     }
   }
 
   function removeSteak() {
     scene.remove(steak);
+    steak = null;
   }
+
+  function toggleSteak() {
+    if (localStorage.getItem('steakEnabled') == "true") {
+      addSteak();
+      removeEnabled(false);
+      animationSpecified();
+    }
+    
+    if (localStorage.getItem('steakEnabled') == "false") {
+      if (steak) {
+        removeSteak();
+      }
+    }
+  }
+
+  setInterval(function() {
+    toggleSteak();
+  }, 5000);
 
   function animate() {
     if (mixer) {
-      mixer.update(clock.getDelta());
-      if (localStorage.getItem('steakEnabled') == "true") {
-        addSteak();
-        setTimeout(function () {
-          removeEnabled(false);
-        }, 5000);
-        animationSpecified();
-        // console.log(steak);
-        // console.log(steak.position.x);
-        // step += speed;
-        // steak.position.y = 10 * Math.abs(Math.sin(step));
-        // steak.position.x = 15 * Math.abs(Math.sin(step));
-
-      } if (localStorage.getItem('steakEnabled') == "false") {
-        removeSteak();
-      }
-
-    }
-
-
-    // if (steak) {
-    //   while (steak.position > (2,0,7)) {
-    //     // Update position based on velocity and time
-    //   position.add(velocity.clone().multiplyScalar(time));
-
-    //   // Apply gravity to the velocity
-    //   velocity.add(gravity.clone().multiplyScalar(time));
-
-    //   // Update object position
-    //   steak.position.copy(position);
-    //   console.log(steak.position);
-    //   // Increment time
-    //   time += 0.0001;
-    // }
-    //   }
-
-    // setInterval(playRandomAnimation, 100);
-
-
-
+      mixer.update(clock.getDelta());      
+      
     leavesMaterial.uniforms.time.value = clock.getElapsedTime();
     leavesMaterial.uniformsNeedUpdate = true;
-
+    
     renderer.render(scene, camera);
   }
+}
 
   renderer.setAnimationLoop(animate);
 

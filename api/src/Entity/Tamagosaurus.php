@@ -49,7 +49,7 @@ class Tamagosaurus
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $hunger = 5;
+    private ?int $hunger = 50;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
