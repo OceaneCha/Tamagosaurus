@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tamagosaurus - Choix de l'oeuf
+{% endblock %}
+
+{% block body %}
+
+	<main>
+		<div class="card col-md-10 mx-auto">
+			{{ parent()}}
+			<style>
+				body {
+					background-image: url({{ asset("build/images/backgrounds/background-blue-one.png") }});
+				}
+			</style>
+			<div class="card-header bg-primary text-white">
+				<h2>Choisis ton oeuf !</h2>
+			</div>
+
+			<div class="card-body">
+				<h3>Un oeuf, un tamagosaure !</h3>
+				<p>
+					Parmi l'un de ces oeufs se trouve ton bébé Tamagosaure.
+					Clique sur l'un d'entre eux pour choisir ton premier Tamagosaure !
+				</p>
+
+            <div class="col-md-12 text-center">
+            {% for egg in eggs %}
+                {% if (is_granted('ROLE_ADMIN')) or (egg.environment.name != 'Dimitri' and egg.environment.name != '3D') or (app.user.username == 'Dimitri' and egg.environment.name == 'Dimitri') %}
+                <a href="{{ path('app_tamagosaurus_new', { id: egg.id }) }}" class="d-inline-block col-md-3" title="{{ egg.name }}">
+                    <img class="img-fluid d-inline" src ="{{ asset( egg.image ) }}">
+                </a>
+                {% endif %}
+            {% endfor %}
+            </div>
+
+			</div>
+		</div>
+
+
+	</main>
+
+{% endblock %}

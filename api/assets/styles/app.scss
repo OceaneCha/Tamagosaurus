@@ -1,0 +1,67 @@
+@import "custom";
+@import '~bootstrap';
+@import '../mdb/scss/mdb.pro.scss';
+@import './mdb.dark.min.css';
+
+body {
+    background-image: url('../images/backgrounds/background-blue-one.png') no-repeat center center fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    
+
+    /*autres priority de l'image de fond*/
+    }
+
+
+.container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;  
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    /*autres priority de l'image de fond*/
+    }
+
+// h1 {
+//     color: $primary;
+// }
+
+// h2 {
+//     color: $primary;
+// }
+
+ .button-eat {  
+  width: 150px;
+ border-radius:30px ;
+-webkit-border-radius:30px ;
+ -moz-border-radius:30px ;
+-ms-border-radius:30px ;
+-o-border-radius:30px ; 
+
+}
+
+.diplosaure-aquaticus{
+    width: 45px;
+}
+
+.element-visible {
+    visibility: visible;
+}
+
+.element-hidden {
+    visibility: hidden;
+}
+
+.neon-effect {
+    box-shadow: 0 0 10px 5px rgba(255, 105, 180, 0.7); /* Ombre rose diffuse */
+}
+
+input {
+    color: black !important;
+}
+
+
