@@ -71,6 +71,7 @@ class TamagosaurusController extends AbstractController
             'tamagosauru' => $tamagosaurus,
             'form' => $form,
             'species' => $species,
+            'egg' => $egg,
         ]);
     }
 

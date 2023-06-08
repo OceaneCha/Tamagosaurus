@@ -20,7 +20,7 @@ Nomme ton tamagosaurus ! —
 				<h1 class="text-white">Tamagosaurus</h1>
 			</div>
 			<div class="card-body text-center">
-				<img style="width: 20%;" src="{{ asset('/build/images/eggs/dinoegg.png') }}">
+				<img style="width: 20%;" src="{{ asset( egg.image ) }}">
 				=>
 				<img style="width: 20%;" src="{{ asset( species.image ) }}">
 
@@ -28,8 +28,6 @@ Nomme ton tamagosaurus ! —
 				<h3>Comment veux-tu m'appeler ?</h3>
 
 				{{ form_row(form.name, { 'label': 'Nom'}) }}
-
-				{# {{ include('tamagosaurus/_form.html.twig') }} #}
 			</div>
 			<div class="card-footer bg-light text-center">
 				<button class="btn btn-primary btn-block">{{ button_label|default('Save') }}</button>
