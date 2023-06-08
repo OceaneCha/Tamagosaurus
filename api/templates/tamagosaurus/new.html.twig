@@ -1,25 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Donne prénom à ma Tamagosaurus
+{% block title %}
+Nomme ton tamagosaurus ! —
+{{ parent() }}
 {% endblock %}
 
 {% block body %}
+
 	<main>
+		{{ parent()}}
+		<style>
+			body {
+				background-image: url({{ asset("build/images/backgrounds/background-blue-one.png") }});
+			}
+		</style>
 		<div class="card col-md-10 mx-auto">
+			{{ form_start(form) }}
 			<div class="card-header bg-primary">
 				<h1 class="text-white">Tamagosaurus</h1>
-				<h2 class="text-secondary">Excellent choix !</h2>
 			</div>
-			<div class="card-body">
-				<img src="{{ asset('/build/images/eggs/dinoegg.png') }}">
+			<div class="card-body text-center">
+				<img style="width: 20%;" src="{{ asset('/build/images/eggs/dinoegg.png') }}">
 				=>
 				<img style="width: 20%;" src="{{ asset( species.image ) }}">
 
 				<p>Bonjour !<br>Je suis un {{species.name}}, je suis content d'avoir été choisi, il commençait à faire chaud dans cet oeuf !</p>
 				<h3>Comment veux-tu m'appeler ?</h3>
 
-				{{ include('tamagosaurus/_form.html.twig') }}
+				{{ form_row(form.name, { 'label': 'Nom'}) }}
+
+				{# {{ include('tamagosaurus/_form.html.twig') }} #}
 			</div>
+			<div class="card-footer bg-light text-center">
+				<button class="btn btn-primary btn-block">{{ button_label|default('Save') }}</button>
+			</div>
+			{{ form_end(form) }}
 		</div>
 	</main>
 {% endblock %}

@@ -22,20 +22,26 @@
 {% block body %}
 
     <div>
-        <h1 class="display-2 text-success h1 text-center font-poppins">Mon premier Tamagosaurus</h1>
         <div
             id="tamagosaurus"
-            class="text-primary display-1 text-center font-weight-bold"
+            class="text-primary text-center font-weight-bold"
             data-tamagosaurus-id="{{tamagosauru.id}}"
         >
-            {{ tamagosauru.name }}
+            <h3>{{ tamagosauru.name }}</h3>
         </div>
 
         {% include 'tamagosaurus/_dino.html.twig' %}        
 
-        <p class="text-success pt-5">Faim : <span id="dino-hunger"></span></p>
-        <h2 class="text-success h2">Donnez lui à manger<h2>
-        <p class="lead text-success">Nourrissez le chaque jour, vous disposez diverses aliments.</p>
+        <p class="text-success">Faim : <span id="dino-hunger"></span></p>
+
+        <!-- Div For Progress Bar -->
+	<div class="progress">
+		<div class="progress-bar progress-bar-striped" role="progressbar"  style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="progressbar" >0%</div>
+	</div>
+	
+	<p id="value"> </p>
+	<!-- End of Container -->
+	</div>
 
         <div id="options-submenu" class="element-visible text-center mb-2"> <!-- JS replaces visible with hidden, but there's no visible -->
             <button class="btn btn-primary btn-lg element-hidden">Fake</button>

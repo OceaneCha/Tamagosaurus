@@ -12,7 +12,7 @@ class DestinationFixtures extends Fixture
         0 => [
             'name' => 'Plage',
             'description' => 'à la plage',
-            'image' => 'beach.jpg',
+            'image' => 'beach.png',
         ],
         1 => [
             'name' => 'Parc',
@@ -22,17 +22,17 @@ class DestinationFixtures extends Fixture
         2 => [
             'name' => 'Montagne',
             'description' => 'à la montagne',
-            'image' => 'mountain.jpg',
+            'image' => 'mountain.png',
         ],
         3 => [
             'name' => 'Ville',
             'description' => 'à la ville',
-            'image' => 'city.jpg',
+            'image' => 'city.png',
         ],
         4 => [
             'name' => 'Jungle',
             'description' => 'à la jungle',
-            'image' => 'jungle.jpg',
+            'image' => 'jungle.png',
         ],
     ];
 
@@ -42,7 +42,7 @@ class DestinationFixtures extends Fixture
             $destination = new Destination();
             $destination->setName($location['name']);
             $destination->setDescription($location['description']);
-            $destination->setImage('build/images/backgrounds/' . $location['image']);
+            $destination->setImage('build/images/backgrounds/destinations/' . $location['image']);
             $manager->persist($destination);
         }
 

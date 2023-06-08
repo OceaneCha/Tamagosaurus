@@ -1,13 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LoginController!{% endblock %}
+{% block title %}Hello LoginController!
+{% endblock %}
 
 {% block body %}
+	{{ parent()}}
+	<style>
+		body {
+			background-image: url({{ asset("build/images/backgrounds/background-blue-one.png") }});
+		}
+	</style>
 
-    {% if app.user %}
-    <p>Welcome {{ app.user.username }}!</p>
-    <p><a href="{{path('app_logout')}}">Logout?</a></p>
-    {% else %}
-        {% include 'login/_form.html.twig' %}
-    {% endif %}
+	{% if app.user %}
+		<p>Welcome
+			{{ app.user.username }}!</p>
+		<p>
+			<a href="{{path('app_logout')}}">Logout?</a>
+		</p>
+	{% else %}
+		{% include 'login/_form.html.twig' %}
+	{% endif %}
 {% endblock %}

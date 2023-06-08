@@ -19,8 +19,8 @@ class RegistrationController extends AbstractController
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManager,
-        Security $security): Response
-    {
+        Security $security
+    ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -33,12 +33,15 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $this->addFlash('success', 'Connexion réussie avec succès!');
 
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
 
             $security->login($user);
+
+
 
             return $this->redirectToRoute('app_home');
         }

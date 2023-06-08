@@ -1,22 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tamagosaurus - Choix de l'oeuf{% endblock %}
+{% block title %}Tamagosaurus - Choix de l'oeuf
+{% endblock %}
 
 {% block body %}
 
-<main>
-    <div class="card col-md-10 mx-auto">
-        <div class="card-header bg-primary">
-            <h1>Tamagosaurus</h1>
-            <h2>Quel oeuf choisirez-vous ?</h2>
-        </div>
+	<main>
+		<div class="card col-md-10 mx-auto">
+			{{ parent()}}
+			<style>
+				body {
+					background-image: url({{ asset("build/images/backgrounds/background-blue-one.png") }});
+				}
+			</style>
+			<div class="card-header bg-primary text-white">
+				<h2>Choisis ton oeuf !</h2>
+			</div>
 
-        <div class="card-body">
-            <h3>Un oeuf, un tamagosaure !</h3>
-            <p>
-                Parmi l'un de ces oeufs se trouve votre bébé Tamagosaure.
-                Cliquez sur l'un d'entre eux pour choisir votre premier Tamagosaure !
-            </p>
+			<div class="card-body">
+				<h3>Un oeuf, un tamagosaure !</h3>
+				<p>
+					Parmi l'un de ces oeufs se trouve ton bébé Tamagosaure.
+					Clique sur l'un d'entre eux pour choisir ton premier Tamagosaure !
+				</p>
 
             <div class="col-md-12 text-center">
             {% for egg in eggs %}
@@ -28,10 +34,10 @@
             {% endfor %}
             </div>
 
-        </div>
-    </div>
+			</div>
+		</div>
 
-    
-</main>
+
+	</main>
 
 {% endblock %}
