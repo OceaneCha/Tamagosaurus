@@ -1,3 +1,5 @@
 <button type="submit" class="btn btn-primary rounded-pill btn-lg" onClick="feed(1)">Nourrir</button>
+{% if is_granted('ROLE_ADMIN') %}
 <button type="submit" class="btn btn-outline-danger rounded-pill btn-lg" onClick="resetFood()">Reset</button>
+{% endif %}
 {# <button type="submit" class="btn" onClick=""><img class="button-eat" src={{ asset('build/images/button.jpg') }}></button> #}
