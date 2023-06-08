@@ -12,7 +12,7 @@ window.onload = function () {
   updateHunger(0, true);
 };
 
-let interval = 45000; // TODO: Set the interval based on the saurus's species
+let interval = 25000; // TODO: Set the interval based on the saurus's species
 setInterval(function () {
   if (saurus.hunger > 0) {
     updateHunger(0, true);
